@@ -1,4 +1,4 @@
-package com.abdulbasit.adebayo.docparser;
+package com.abdulbasit.adebayo.docparser.config;
 
 import lombok.Data;
 

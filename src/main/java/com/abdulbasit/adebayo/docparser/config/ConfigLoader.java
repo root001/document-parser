@@ -1,5 +1,6 @@
-package com.abdulbasit.adebayo.docparser;
+package com.abdulbasit.adebayo.docparser.config;
 
+import com.abdulbasit.adebayo.docparser.exception.ConfigException;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.slf4j.Logger;

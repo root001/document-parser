@@ -5,8 +5,7 @@
 
 ### **Prompt 1.1: Initialize Maven Project**
 <code>  
-**Task:**  
-- Create a single-module Maven project.  
+**Task:**
 - Add dependencies:  
   - SnakeYAML (`1.33`) for YAML parsing.  
   - Log4j 2 (`2.20.0`) for logging.  
@@ -15,10 +14,7 @@
 **Test:**
 - Run `mvn clean install` → Verify build success.
 - Execute `java -jar target/parser.jar --health` → Validate output.
-
-**Integration:**
-- Commit a simple `pom.xml` with dependency definitions.  
-  </code>
+</code>
 
 ---
 
