@@ -15,9 +15,12 @@ public class DocParserApplication {
 
 	@Component
 	public static class HealthCheckRunner implements ApplicationRunner {
+		private static final Logger logger = LoggerFactory.getLogger(HealthCheckRunner.class);
+
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
 			if (args.containsOption("health")) {
+				logger.info("Health check requested");
 				System.out.println("{\"status\": \"ok\"}");
 				System.exit(0);
 			}
