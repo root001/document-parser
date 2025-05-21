@@ -20,9 +20,15 @@ public class XmlParser {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     
     private final ModelLookup modelLookup;
+    private final boolean caseSensitiveLookup;
 
     public XmlParser(ModelLookup modelLookup) {
+        this(modelLookup, false);
+    }
+
+    public XmlParser(ModelLookup modelLookup, boolean caseSensitiveLookup) {
         this.modelLookup = modelLookup;
+        this.caseSensitiveLookup = caseSensitiveLookup;
     }
 
     public List<BrandRelease> parse(Path xmlPath) throws ParseException {
