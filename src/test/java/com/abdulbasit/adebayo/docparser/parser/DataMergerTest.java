@@ -22,7 +22,8 @@ class DataMergerTest {
         List<BrandRelease> result = merger.mergeData(csvData, xmlData, null);
         
         assertEquals(LocalDate.of(2023, 1, 15), result.get(0).releaseDate());
-        
+    }
+
     @Test
     void mergeData_WithFilter_FiltersResults() {
         List<BrandRelease> csvData = List.of(
@@ -53,6 +54,7 @@ class DataMergerTest {
 
         List<BrandRelease> result = merger.mergeData(csvData, xmlData);
         
+        List<BrandRelease> result = merger.mergeData(csvData, xmlData, null);
         assertEquals(LocalDate.of(2023, 3, 1), result.get(0).releaseDate());
     }
 
@@ -68,6 +70,7 @@ class DataMergerTest {
 
         List<BrandRelease> result = merger.mergeData(csvData, xmlData);
         
+        List<BrandRelease> result = merger.mergeData(csvData, xmlData, null);
         assertEquals(LocalDate.of(2023, 1, 15), result.get(0).releaseDate());
     }
 }
