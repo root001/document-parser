@@ -2,9 +2,12 @@ package com.abdulbasit.adebayo.docparser.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public record BrandRelease(
     String brandName,
     String productName,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDate releaseDate,
     String version
 ) {
