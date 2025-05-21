@@ -6,35 +6,35 @@ public class Config {
     private String outputPath;
     private String logLevel = "info";
 
-    public String getInputCsv() {
+    public String getInput_csv() {
         return inputCsv;
     }
 
-    public void setInputCsv(String inputCsv) {
+    public void setInput_csv(String inputCsv) {
         this.inputCsv = inputCsv;
     }
 
-    public String getInputXml() {
+    public String getInput_xml() {
         return inputXml;
     }
 
-    public void setInputXml(String inputXml) {
+    public void setInput_xml(String inputXml) {
         this.inputXml = inputXml;
     }
 
-    public String getOutputPath() {
+    public String getOutput_path() {
         return outputPath;
     }
 
-    public void setOutputPath(String outputPath) {
+    public void setOutput_path(String outputPath) {
         this.outputPath = outputPath;
     }
 
-    public String getLogLevel() {
+    public String getLog_level() {
         return logLevel;
     }
 
-    public void setLogLevel(String logLevel) {
+    public void setLog_level(String logLevel) {
         this.logLevel = logLevel;
     }
 }

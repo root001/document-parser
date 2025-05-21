@@ -14,10 +14,10 @@ class ConfigLoaderTest {
     void loadConfig_ValidConfig_ReturnsConfig(@TempDir Path tempDir) throws Exception {
         // Create a test YAML file
         String yamlContent = """
-                inputCsv: test.csv
-                inputXml: test.xml
-                outputPath: output/
-                logLevel: debug
+                input_csv: test.csv
+                input_xml: test.xml
+                output_path: output/
+                log_level: debug
                 """;
         Path configFile = tempDir.resolve("config.yaml");
         Files.writeString(configFile, yamlContent);

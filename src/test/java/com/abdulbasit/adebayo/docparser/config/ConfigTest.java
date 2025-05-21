@@ -7,9 +7,9 @@ class ConfigTest {
     @Test
     void getters_ReturnDefaultValues() {
         Config config = new Config();
-        assertNull(config.getInputCsv());
-        assertNull(config.getInputXml());
-        assertNull(config.getOutputPath());
-        assertEquals("info", config.getLogLevel());
+        assertNull(config.getInput_csv());
+        assertNull(config.getInput_xml());
+        assertNull(config.getOutput_path());
+        assertEquals("info", config.getLog_level());
     }
 }
