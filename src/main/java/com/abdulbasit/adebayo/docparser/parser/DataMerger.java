@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class DataMerger {
     private static final Logger logger = LoggerFactory.getLogger(DataMerger.class);
 
-    public List<BrandRelease> mergeData(List<BrandRelease> csvData, List<BrandRelease> xmlData, Predicate<Car> filter) {
+    public List<Car> mergeData(List<BrandRelease> csvData, List<BrandRelease> xmlData, Predicate<Car> filter) {
         // Create lookup map: productName -> releaseDate from CSV
         Map<String, LocalDate> productDateMap = new HashMap<>();
         csvData.forEach(release -> 
@@ -20,14 +20,14 @@ public class DataMerger {
         );
 
         // Merge XML data with CSV dates
-        List<BrandRelease> mergedData = xmlData.stream()
+        List<Car> mergedData = xmlData.stream()
             .map(xmlRelease -> {
                 LocalDate csvDate = productDateMap.get(xmlRelease.productName());
-                return new BrandRelease(
+                return new Car(
                     xmlRelease.brandName(),
                     xmlRelease.productName(),
-                    csvDate != null ? csvDate : xmlRelease.releaseDate(),
-                    xmlRelease.version()
+                    Double.parseDouble(xmlRelease.version().substring(1)),
+                    csvDate != null ? csvDate : xmlRelease.releaseDate()
                 );
             })
             .collect(Collectors.toList());

@@ -5,6 +5,7 @@ public class Config {
     private String inputXml;
     private String outputPath;
     private String logLevel = "info";
+    private String outputFormat = "json"; // json or xml
 
     public String getInput_csv() {
         return inputCsv;
@@ -36,5 +37,13 @@ public class Config {
 
     public void setLog_level(String logLevel) {
         this.logLevel = logLevel;
+    }
+
+    public String getOutput_format() {
+        return outputFormat;
+    }
+
+    public void setOutput_format(String outputFormat) {
+        this.outputFormat = outputFormat;
     }
 }

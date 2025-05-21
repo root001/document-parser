@@ -1,9 +1,17 @@
 package com.abdulbasit.adebayo.docparser.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
+@JacksonXmlRootElement(localName = "car")
 public record Car(
     String brand,
     String model,
-    double price
+    double price,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy,dd,MM")
+    LocalDate releaseDate
 ) {
     public Car {
         if (brand == null || brand.isBlank()) {
