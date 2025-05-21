@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public record BrandRelease(
     String brandName,
     String productName,
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy,dd,MM")
     LocalDate releaseDate,
     String version
 ) {

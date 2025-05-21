@@ -47,7 +47,7 @@ public class XmlParser {
                 String dateStr = product.getElementsByTagName("releaseDate").item(0).getTextContent();
                 
                 String brand = modelLookup.getBrandForModel(model);
-                LocalDate releaseDate = LocalDate.parse(dateStr, DATE_FORMATTER);
+                LocalDate releaseDate = DateFormatter.parseFromInput(dateStr);
                 
                 releases.add(new BrandRelease(
                     brand,

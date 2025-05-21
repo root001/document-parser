@@ -18,6 +18,7 @@ import java.util.List;
 public class CsvParser {
     private static final Logger logger = LoggerFactory.getLogger(CsvParser.class);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy,dd,MM");
     private static final String CSV_DELIMITER = ",";
 
     public List<BrandRelease> parse(Path csvPath) throws ParseException, IOException {
@@ -37,7 +38,7 @@ public class CsvParser {
                         throw new ParseException("Invalid CSV format at line " + lineNumber);
                     }
                     
-                    LocalDate releaseDate = parseDate(parts[2].trim());
+                    LocalDate releaseDate = DateFormatter.parseFromInput(parts[2].trim());
                     BrandRelease release = new BrandRelease(
                         parts[0].trim(),
                         parts[1].trim(),
