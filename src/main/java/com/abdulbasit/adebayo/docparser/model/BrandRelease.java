@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.abdulbasit.adebayo.docparser.util.DateFormatter;
+
 public record BrandRelease(
     String brandName,
     String productName,
@@ -21,5 +23,14 @@ public record BrandRelease(
         if (releaseDate == null) {
             throw new IllegalArgumentException("Release date cannot be null");
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s", 
+            brandName, 
+            productName, 
+            DateFormatter.formatForOutput(releaseDate), 
+            version);
     }
 }
