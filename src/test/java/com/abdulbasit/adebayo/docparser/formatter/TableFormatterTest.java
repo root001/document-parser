@@ -1,6 +1,6 @@
 package com.abdulbasit.adebayo.docparser.formatter;
 
-import com.abdulbasit.adebayo.docparser.model.BrandRelease;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class TableFormatterTest {
     @Test
     void format_SingleRelease_ReturnsFormattedTable() {
-        List<BrandRelease> releases = List.of(
-            new BrandRelease("Toyota", "RAV4", LocalDate.of(2023, 1, 15), "v1.0")
+        List<CarBrand> releases = List.of(
+            new CarBrand("Toyota", "RAV4", LocalDate.of(2023, 1, 15), "v1.0")
         );
         
         TableFormatter formatter = new TableFormatter();
@@ -22,8 +22,8 @@ class TableFormatterTest {
 
     @Test
     void format_LongValues_TruncatesWithEllipsis() {
-        List<BrandRelease> releases = List.of(
-            new BrandRelease("Toyota Motor Corporation", "RAV4 Hybrid XSE", LocalDate.of(2023, 1, 15), "version1.0")
+        List<CarBrand> releases = List.of(
+            new CarBrand("Toyota Motor Corporation", "RAV4 Hybrid XSE", LocalDate.of(2023, 1, 15), "version1.0")
         );
         
         TableFormatter formatter = new TableFormatter();
