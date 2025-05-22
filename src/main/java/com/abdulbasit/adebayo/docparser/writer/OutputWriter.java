@@ -24,4 +24,14 @@ public class OutputWriter {
     public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
         xmlMapper.writeValue(Files.newBufferedWriter(outputPath), cars);
     }
+
+    // For testing purposes only
+    static ObjectMapper getJsonMapperForTesting() {
+        return jsonMapper;
+    }
+
+    // For testing purposes only
+    static XmlMapper getXmlMapperForTesting() {
+        return xmlMapper;
+    }
 }

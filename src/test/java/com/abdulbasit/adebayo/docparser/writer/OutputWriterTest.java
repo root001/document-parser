@@ -24,7 +24,7 @@ class OutputWriterTest {
         Path jsonFile = tempDir.resolve("cars.json");
         
         OutputWriter.writeJson(jsonFile, cars);
-        List<Car> readCars = OutputWriter.jsonMapper.readValue(
+        List<Car> readCars = OutputWriter.getJsonMapperForTesting().readValue(
             Files.newBufferedReader(jsonFile),
             new TypeReference<List<Car>>() {});
             
@@ -39,8 +39,8 @@ class OutputWriterTest {
         Path xmlFile = tempDir.resolve("cars.xml");
         
         OutputWriter.writeXml(xmlFile, cars);
-        List<Car> readCars = OutputWriter.xmlMapper.readValue(
-            Files.newBufferedReader(xmlFile), 
+        List<Car> readCars = OutputWriter.getXmlMapperForTesting().readValue(
+            Files.newBufferedReader(xmlFile),
             new TypeReference<List<Car>>() {});
             
         assertEquals(cars, readCars);
