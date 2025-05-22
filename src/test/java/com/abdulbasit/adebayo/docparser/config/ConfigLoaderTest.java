@@ -25,8 +25,7 @@ class ConfigLoaderTest {
         Path configFile = tempDir.resolve("config.yaml");
         Files.writeString(configFile, yamlContent);
 
-        Config config = configLoaderEx.loadConfig(configFile.toString());
-    //    Config config = configLoader.loadConfig(configFile.toString());
+        Config config = configLoader.loadConfig(configFile.toString());
 
         assertNotNull(config);
         assertEquals("test.csv", config.getInput_csv());
