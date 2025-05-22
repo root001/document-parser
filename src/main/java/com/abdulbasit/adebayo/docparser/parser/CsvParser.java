@@ -1,12 +1,13 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
-import com.abdulbasit.adebayo.docparser.model.BrandRelease;
+import com.abdulbasit.adebayo.docparser.model.Brand;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.exception.ParseException;
+import com.abdulbasit.adebayo.docparser.util.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -18,11 +19,11 @@ import java.util.List;
 public class CsvParser {
     private static final Logger logger = LoggerFactory.getLogger(CsvParser.class);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy,dd,MM");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy/dd/MM");
     private static final String CSV_DELIMITER = ",";
 
-    public List<BrandRelease> parse(Path csvPath) throws ParseException, IOException {
-        List<BrandRelease> releases = new ArrayList<>();
+    public List<Brand> parse(Path csvPath) throws ParseException, IOException {
+        List<Brand> releases = new ArrayList<>();
         
         try (BufferedReader reader = Files.newBufferedReader(csvPath)) {
             String line;
@@ -39,11 +40,9 @@ public class CsvParser {
                     }
                     
                     LocalDate releaseDate = DateFormatter.parseFromInput(parts[2].trim());
-                    BrandRelease release = new BrandRelease(
+                    Brand release = new Brand(
                         parts[0].trim(),
-                        parts[1].trim(),
-                        releaseDate,
-                        parts[3].trim()
+                        releaseDate
                     );
                     releases.add(release);
                 } catch (IllegalArgumentException | DateTimeParseException e) {

@@ -1,7 +1,10 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
-import com.abdulbasit.adebayo.docparser.model.BrandRelease;
+import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.exception.ParseException;
+import com.abdulbasit.adebayo.docparser.model.Price;
+import com.abdulbasit.adebayo.docparser.util.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -31,29 +34,34 @@ public class XmlParser {
         this.caseSensitiveLookup = caseSensitiveLookup;
     }
 
-    public List<BrandRelease> parse(Path xmlPath) throws ParseException {
-        List<BrandRelease> releases = new ArrayList<>();
+    public List<Car> parse(Path xmlPath) throws ParseException {
+        List<Car> releases = new ArrayList<>();
         
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlPath.toFile());
-            
-            NodeList productNodes = document.getElementsByTagName("product");
+            List<Price> priceList = new ArrayList<>();
+            NodeList productNodes = document.getElementsByTagName("car");
             for (int i = 0; i < productNodes.getLength(); i++) {
                 Element product = (Element) productNodes.item(i);
+                String type = product.getElementsByTagName("type").item(0).getTextContent();
                 String model = product.getElementsByTagName("model").item(0).getTextContent();
-                String version = product.getElementsByTagName("version").item(0).getTextContent();
-                String dateStr = product.getElementsByTagName("releaseDate").item(0).getTextContent();
+                String currency = product.getElementsByTagName("price").item(0).getTextContent();
+                String amount = product.getElementsByTagName("price").item(1).getTextContent();
+                NodeList pricesListNode = product.getElementsByTagName("prices");
+                for (int j = 0; j < pricesListNode.getLength(); j++) {
+                    Element pricesList = (Element) pricesListNode.item(i);
+                    String currencyPrice = pricesList.getElementsByTagName("price").item(0).getTextContent();
+                    String amountPrice = pricesList.getElementsByTagName("price").item(1).getTextContent();
+                    priceList.add(new Price(currencyPrice, Double.parseDouble(amountPrice)));
+                }
                 
-                String brand = modelLookup.getBrandForModel(model);
-                LocalDate releaseDate = DateFormatter.parseFromInput(dateStr);
-                
-                releases.add(new BrandRelease(
-                    brand,
+                releases.add(new Car(
+                    type,
                     model,
-                    releaseDate,
-                    version
+                    new Price(currency, Double.parseDouble(amount)),
+                        priceList
                 ));
             }
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.abdulbasit.adebayo.docparser.config;
 
 import com.abdulbasit.adebayo.docparser.exception.ConfigException;
+import org.apache.logging.log4j.Level;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.apache.logging.log4j.core.config.Configurator;
 
 public class ConfigLoader {
     private static final Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
@@ -30,8 +32,7 @@ public class ConfigLoader {
             logger.info("Loaded configuration: {}", config);
             // Update log level if specified in config
             if (config.getLog_level() != null) {
-                org.apache.logging.log4j.core.config.Configurator.setRootLevel(
-                    org.apache.logging.log4j.Level.valueOf(config.getLog_level().toUpperCase()));
+                Configurator.setRootLevel(Level.valueOf(config.getLog_level().toUpperCase()));
                 logger.info("Set log level to: {}", config.getLog_level());
             }
             return config;

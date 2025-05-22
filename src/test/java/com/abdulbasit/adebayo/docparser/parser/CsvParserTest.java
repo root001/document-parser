@@ -1,9 +1,12 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
-import com.abdulbasit.adebayo.docparser.model.BrandRelease;
+import com.abdulbasit.adebayo.docparser.model.Brand;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.exception.ParseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,10 +24,10 @@ class CsvParserTest {
         Path csvFile = tempDir.resolve("test.csv");
         Files.writeString(csvFile, csvContent);
 
-        List<BrandRelease> result = parser.parse(csvFile);
+        List<Brand> result = parser.parse(csvFile);
         
         assertEquals(2, result.size());
-        assertEquals("Brand1", result.get(0).brandName());
+        assertEquals("Brand1", result.get(0).productName());
         assertEquals(LocalDate.of(2023, 1, 15), result.get(0).releaseDate());
     }
 

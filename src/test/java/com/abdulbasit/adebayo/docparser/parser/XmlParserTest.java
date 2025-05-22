@@ -1,9 +1,11 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
-import com.abdulbasit.adebayo.docparser.model.BrandRelease;
-import com.abdulbasit.adebayo.docparser.exception.ParseException;
+import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,10 +32,10 @@ class XmlParserTest {
         Files.writeString(xmlFile, xmlContent);
 
         XmlParser parser = new XmlParser(lookup);
-        List<BrandRelease> result = parser.parse(xmlFile);
+        List<Car> result = parser.parse(xmlFile);
         
         assertEquals(1, result.size());
-        assertEquals("brand1", result.get(0).brandName());
+        assertEquals("brand1", result.get(0).type());
     }
 
     @Test
@@ -57,8 +59,8 @@ class XmlParserTest {
         Files.writeString(xmlFile, xmlContent);
 
         XmlParser parser = new XmlParser(lookup);
-        List<BrandRelease> result = parser.parse(xmlFile);
+        List<Car> result = parser.parse(xmlFile);
         
-        assertEquals("Unknown", result.get(0).brandName());
+        assertEquals("Unknown", result.get(0).type());
     }
 }

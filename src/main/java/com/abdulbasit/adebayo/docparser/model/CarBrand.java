@@ -1,20 +1,23 @@
 package com.abdulbasit.adebayo.docparser.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.abdulbasit.adebayo.docparser.util.DateFormatter;
 
-public record BrandRelease(
-    String brandName,
+public record CarBrand(
+    String brandType,
     String productName,
+    String model,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy,dd,MM")
     LocalDate releaseDate,
-    String version
+    Price price,
+    List<Price> priceList
 ) {
-    public BrandRelease {
-        if (brandName == null || brandName.isBlank()) {
+    public CarBrand {
+        if (brandType == null || brandType.isBlank()) {
             throw new IllegalArgumentException("Brand name cannot be empty");
         }
         if (productName == null || productName.isBlank()) {
@@ -27,10 +30,11 @@ public record BrandRelease(
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %s", 
-            brandName, 
-            productName, 
-            DateFormatter.formatForOutput(releaseDate), 
-            version);
+        return String.format("%s %s %s %s %s",
+                brandType,
+                productName,
+                model,
+                DateFormatter.formatForOutput(releaseDate),
+                price);
     }
 }
