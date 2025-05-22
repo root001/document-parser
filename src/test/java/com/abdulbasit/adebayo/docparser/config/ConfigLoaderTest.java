@@ -25,10 +25,10 @@ class ConfigLoaderTest {
         Config config = configLoader.loadConfig(configFile.toString());
 
         assertNotNull(config);
-        assertEquals("test.csv", config.getInputCsv());
-        assertEquals("test.xml", config.getInputXml());
-        assertEquals("output/", config.getOutputPath());
-        assertEquals("debug", config.getLogLevel());
+        assertEquals("test.csv", config.getInput_csv());
+        assertEquals("test.xml", config.getInput_xml());
+        assertEquals("output/", config.getOutput_path());
+        assertEquals("debug", config.getLog_level());
     }
 
     @Test

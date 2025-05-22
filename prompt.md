@@ -132,19 +132,7 @@
 
 ---
 
-### **Prompt 4.1: Currency Logic**
-<code>  
-**Task:**  
-- Create `CurrencyResolver.java` to select prices by type→currency→default.  
-- Add `strictMode` to fail on missing prices.  
 
-**Test:**
-- Unit test: SUV→EUR selected.
-- Unit test: `strictMode=true` → Throws error.
-
-**Integration:**
-- Use resolver in `DataMerger`.  
-  </code>
 
 ---
 
@@ -162,22 +150,36 @@
   </code>
 
 ---
-
+---++++++++++++++
 # **Phase 5: Output Generation**
 **Goal:** Generate formatted outputs.
 
 ---
 
-### **Prompt 5.1: Table Output**
+### **Prompt 5.1: Date Formatting Utility**
 <code>  
 **Task:**  
-- Create `TableFormatter.java` with aligned columns.  
-- Format dates as `yyyy,dd,MM`.  
+- Create a `DateFormatter` utility class to enforce the `yyyy,dd,MM` format for release dates.  
+- Ensure all output formats (Table/JSON/XML) use this formatter.  
+- Example: `01/15/2023` (CSV input) → `2023,15,01` (output).  
 
 **Test:**
-- Unit test: Validate headers/alignment.
-- Integration test: Match sample output.  
+- Unit test: Verify `DateFormatter` converts `LocalDate` to `yyyy,dd,MM` string.
+- Edge case: Single-digit days/months (e.g., `03` instead of `3`).  
   </code>
+
+--- +++++++++
+
+### **Prompt 5.2: Table Formatter**
+<code>  
+**Task:**  
+- Update `TableFormatter` to include `Release Date (yyyy,dd,MM)` column.  
+- Align columns dynamically (e.g., `Brand` 10 chars, `Release Date` 12 chars).  
+- Example output:  
+  ```plaintext  
+  | Brand   | Model | Release Date (yyyy,dd,MM) |  
+  |---------|-------|----------------------------|  
+  | Toyota  | RAV4  | 2023,15,01                |  
 
 ---
 
@@ -194,7 +196,7 @@
 - Write to `output/` path from config.  
   </code>
 
----
+--- _+++++++++++++++++++++++--
 
 # **Phase 6: Finalization**
 **Goal:** Optimize and document.

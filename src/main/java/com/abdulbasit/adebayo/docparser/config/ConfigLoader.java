@@ -17,22 +17,22 @@ public class ConfigLoader {
             Yaml yaml = new Yaml(new Constructor(Config.class));
             Config config = yaml.load(inputStream);
             
-            if (config.getInputCsv() == null) {
+            if (config.getInput_csv() == null) {
                 throw new ConfigException("Missing required field: inputCsv");
             }
-            if (config.getInputXml() == null) {
+            if (config.getInput_xml() == null) {
                 throw new ConfigException("Missing required field: inputXml");
             }
-            if (config.getOutputPath() == null) {
+            if (config.getOutput_path() == null) {
                 throw new ConfigException("Missing required field: outputPath");
             }
 
             logger.info("Loaded configuration: {}", config);
             // Update log level if specified in config
-            if (config.getLogLevel() != null) {
+            if (config.getLog_level() != null) {
                 org.apache.logging.log4j.core.config.Configurator.setRootLevel(
-                    org.apache.logging.log4j.Level.valueOf(config.getLogLevel().toUpperCase()));
-                logger.info("Set log level to: {}", config.getLogLevel());
+                    org.apache.logging.log4j.Level.valueOf(config.getLog_level().toUpperCase()));
+                logger.info("Set log level to: {}", config.getLog_level());
             }
             return config;
         } catch (Exception e) {
