@@ -18,8 +18,10 @@ import java.util.stream.Collectors;
 public class DataMerger {
     private static final Logger logger = LoggerFactory.getLogger(DataMerger.class);
 
-    @Value("${car.brand.mapping:Toyota=RAV4,Honda=Civic,Ford=F-150,Tesla=Model X,BMW=330i,Audi=Q5,Chevrolet=Silverado,Mercedes-Benz=C-Class,Nissan=Rogue,Hyundai=Elantra}")
-    private String carBrandMappingConfig;
+    @Value("${car.brand.mapping}")
+    private String carBrandMappingConfig2;
+
+    private String carBrandMappingConfig = "Toyota=RAV4,Honda=Civic,Ford=F-150,Tesla=Model X,BMW=330i,Audi=Q5,Chevrolet=Silverado,Mercedes-Benz=C-Class,Nissan=Rogue,Hyundai=Elantra";
 
     private Map<String, String> carBrandMap;
 
@@ -30,6 +32,8 @@ public class DataMerger {
 
     private void ensureBrandMappingInitialized() {
         if (carBrandMap == null) {
+            logger.info("--- Static hardcoded test : {}", carBrandMappingConfig);
+            logger.info("--- Mapping from config file : {}", carBrandMappingConfig2);
             this.carBrandMap = parseCarBrandMapping(carBrandMappingConfig);
             logger.info("Initialized car brand mapping with {} entries", carBrandMap.size());
         }
@@ -92,10 +96,11 @@ public class DataMerger {
      * For each Car from XML, finds matching Brand from CSV using the carBrandMap.
      */
     private List<CarBrand> mergeXmlWithCsvData(List<Car> xmlData, Map<String, LocalDate> brandDateMap) {
+        logger.info("-- xmlData to merge : {} and mergeXmlWithCsvData dateMap is : {}", xmlData, brandDateMap);
         return xmlData.stream()
                 .filter(Objects::nonNull)
                 .filter(car -> car.type() != null && car.model() != null)
-                .map(car -> createCarBrand(car, brandDateMap))
+                .map(car -> createCarBrand(car, brandDateMap) )
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
@@ -106,24 +111,24 @@ public class DataMerger {
      */
     private CarBrand createCarBrand(Car xmlCar, Map<String, LocalDate> brandDateMap) {
         try {
+            logger.info("Initiating car brand for :{} and dateMap : {}", xmlCar.model(), brandDateMap);
             String carModel = xmlCar.model(); // e.g., "RAV4"
 
             // Find the brand that corresponds to this car model using reverse lookup
             String brandName = findBrandForModel(carModel);
-
+            logger.info("Found brand name for :{}", brandName);
             if (brandName == null) {
                 logger.debug("No brand mapping found for car model: {}. Skipping record.", carModel);
                 return null; // Skip records without mapping
             }
 
-            // First try to get date from XML (car.releaseDate()), fall back to CSV date
-            LocalDate releaseDate = xmlCar.releaseDate() != null ? 
-                xmlCar.releaseDate() : 
-                brandDateMap.get(brandName);
-
+            // Look up release date from CSV using the brand name
+            LocalDate releaseDate = brandDateMap.get(brandName);
+            logger.info("releaseDate for name is :{}", releaseDate);
+            // Skip records without matching release date
             if (releaseDate == null) {
-                logger.debug("No release date found for brand: {}. Using current date.", brandName);
-                releaseDate = LocalDate.now();
+                logger.debug("No release date found for brand: {}. Skipping record.", brandName);
+                return null;
             }
 
             return new CarBrand(

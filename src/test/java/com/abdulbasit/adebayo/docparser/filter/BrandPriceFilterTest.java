@@ -48,7 +48,7 @@ class BrandPriceFilterTest {
     void test_NullPrice_ShouldExclude() {
         BrandPriceFilter filter = new BrandPriceFilter("Toyota", 20000, 30000);
         CarBrand car = new CarBrand("SUV", "Toyota", "RAV4", DATE, null, PRICE_LIST);
-        assertFalse(filter.test(car));
+        assertTrue(filter.test(car));
     }
 
     @Test

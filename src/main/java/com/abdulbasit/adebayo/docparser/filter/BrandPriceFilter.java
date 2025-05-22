@@ -2,6 +2,7 @@ package com.abdulbasit.adebayo.docparser.filter;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
+import com.abdulbasit.adebayo.docparser.model.Price;
 
 import java.util.function.Predicate;
 
@@ -18,7 +19,7 @@ public class BrandPriceFilter implements Predicate<CarBrand> {
 
     @Override
     public boolean test(CarBrand car) {
-        if (car == null || !car.brandType().equalsIgnoreCase(brand)) {
+        if (car == null || !car.productName().equalsIgnoreCase(brand)) {
             return false;
         }
 

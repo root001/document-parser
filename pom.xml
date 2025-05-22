@@ -34,25 +34,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.4.14</version>
-		</dependency>
+
+		<!-- Remove explicit logback-classic as it's included in spring-boot-starter -->
+
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-			<version>1.33</version>
+			<!-- Version managed by Spring Boot parent -->
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.17.0</version>
+			<!-- Version managed by Spring Boot parent -->
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>2.17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -65,12 +62,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Log4j2 Core -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.23.1</version> <!-- Use the same version as log4j-api -->
-		</dependency>
+		<!-- REMOVED Log4j2 Core - it conflicts with Logback -->
 	</dependencies>
 
 	<build>

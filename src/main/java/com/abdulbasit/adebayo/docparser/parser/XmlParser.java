@@ -1,10 +1,8 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
-import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.exception.ParseException;
 import com.abdulbasit.adebayo.docparser.model.Price;
-import com.abdulbasit.adebayo.docparser.util.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -13,7 +11,6 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
