@@ -18,8 +18,19 @@ public class BrandPriceFilter implements Predicate<CarBrand> {
 
     @Override
     public boolean test(CarBrand car) {
-        return car.brandType().equalsIgnoreCase(brand)
-            && car.price().amount() >= minPrice
-            && car.price().amount() <= maxPrice;
+        if (car == null || !car.brandType().equalsIgnoreCase(brand)) {
+            return false;
+        }
+
+        // Check price from price() or first price in priceList
+        Price price = car.price();
+        if (price == null && car.priceList() != null && !car.priceList().isEmpty()) {
+            price = car.priceList().get(0);
+        }
+        if (price == null) {
+            return false;
+        }
+
+        return price.amount() >= minPrice && price.amount() <= maxPrice;
     }
 }
