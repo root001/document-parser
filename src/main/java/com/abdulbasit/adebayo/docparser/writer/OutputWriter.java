@@ -4,7 +4,8 @@ import com.abdulbasit.adebayo.docparser.model.Car;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.util.XmlRootNameLookup;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.dataformat.xml.XmlAnnotationIntrospector;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,8 +43,8 @@ public class OutputWriter {
         // Configure XML output
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         
-        // Create wrapper element with root name
-        xmlMapper.setAnnotationIntrospector(new XmlRootNameLookup());
+        // Configure XML root element name
+        xmlMapper.setAnnotationIntrospector(new XmlAnnotationIntrospector());
         xmlMapper.writeValue(outputPath.toFile(), cars);
     }
 
