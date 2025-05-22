@@ -43,8 +43,8 @@ public class OutputWriter {
         // Configure XML output
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         
-        // Configure XML root element name
-        xmlMapper.setAnnotationIntrospector(new XmlAnnotationIntrospector());
+        // Configure XML output with default annotation handling
+        xmlMapper.setAnnotationIntrospector(new XmlAnnotationIntrospector.Pair());
         xmlMapper.writeValue(outputPath.toFile(), cars);
     }
 
