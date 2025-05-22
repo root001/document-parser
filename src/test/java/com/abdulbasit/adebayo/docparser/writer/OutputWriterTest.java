@@ -3,6 +3,8 @@ package com.abdulbasit.adebayo.docparser.writer;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +20,7 @@ class OutputWriterTest {
         
         OutputWriter.writeJson(jsonFile, cars);
         List<Car> readCars = OutputWriter.jsonMapper.readValue(
-            Files.newBufferedReader(jsonFile), 
+            Files.newBufferedReader(jsonFile),
             new TypeReference<List<Car>>() {});
             
         assertEquals(cars, readCars);
