@@ -38,27 +38,32 @@ public class XmlParser {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlPath.toFile());
-            List<Price> priceList = new ArrayList<>();
-            NodeList productNodes = document.getElementsByTagName("car");
+            
+            NodeList productNodes = document.getElementsByTagName("product");
             for (int i = 0; i < productNodes.getLength(); i++) {
                 Element product = (Element) productNodes.item(i);
-                String type = product.getElementsByTagName("type").item(0).getTextContent();
+                
                 String model = product.getElementsByTagName("model").item(0).getTextContent();
-                String currency = product.getElementsByTagName("price").item(0).getTextContent();
-                String amount = product.getElementsByTagName("price").item(1).getTextContent();
-                NodeList pricesListNode = product.getElementsByTagName("prices");
-                for (int j = 0; j < pricesListNode.getLength(); j++) {
-                    Element pricesList = (Element) pricesListNode.item(i);
-                    String currencyPrice = pricesList.getElementsByTagName("price").item(0).getTextContent();
-                    String amountPrice = pricesList.getElementsByTagName("price").item(1).getTextContent();
-                    priceList.add(new Price(currencyPrice, Double.parseDouble(amountPrice)));
+                String brand = modelLookup.getBrandForModel(model);
+                
+                // Handle optional price elements
+                Price price = null;
+                List<Price> priceList = new ArrayList<>();
+                
+                NodeList priceNodes = product.getElementsByTagName("price");
+                if (priceNodes.getLength() > 0) {
+                    Element priceElem = (Element) priceNodes.item(0);
+                    String currency = priceElem.getAttribute("currency");
+                    String amount = priceElem.getTextContent();
+                    price = new Price(currency, Double.parseDouble(amount));
+                    priceList.add(price);
                 }
                 
                 releases.add(new Car(
-                    type,
+                    brand,
                     model,
-                    new Price(currency, Double.parseDouble(amount)),
-                        priceList
+                    price,
+                    priceList
                 ));
             }
         } catch (Exception e) {

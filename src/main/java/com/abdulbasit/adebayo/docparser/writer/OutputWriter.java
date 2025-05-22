@@ -29,19 +29,23 @@ public class OutputWriter {
     }
 
     public static void writeJson(Path outputPath, List<Car> cars) throws IOException {
-        // Ensure parent directories exist
-        if (outputPath.getParent() != null) {
-            Files.createDirectories(outputPath.getParent());
-        }
-        jsonMapper.writeValue(Files.newBufferedWriter(outputPath), cars);
+        Files.createDirectories(outputPath.getParent());
+        jsonMapper.writeValue(outputPath.toFile(), cars);
     }
 
     public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
-        // Ensure parent directories exist
-        if (outputPath.getParent() != null) {
-            Files.createDirectories(outputPath.getParent());
-        }
-        xmlMapper.writeValue(Files.newBufferedWriter(outputPath), cars);
+        Files.createDirectories(outputPath.getParent());
+        
+        // Configure XML output
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+        
+        // Create wrapper element
+        String rootName = "products";
+        XmlMapper mapper = (XmlMapper) xmlMapper.writer()
+            .withRootName(rootName);
+        
+        mapper.writeValue(outputPath.toFile(), cars);
     }
 
     // For testing purposes only
