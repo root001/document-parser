@@ -116,13 +116,14 @@ public class DataMerger {
                 return null; // Skip records without mapping
             }
 
-            // Look up release date from CSV using the brand name
-            LocalDate releaseDate = brandDateMap.get(brandName);
+            // First try to get date from XML (car.releaseDate()), fall back to CSV date
+            LocalDate releaseDate = xmlCar.releaseDate() != null ? 
+                xmlCar.releaseDate() : 
+                brandDateMap.get(brandName);
 
-            // Skip records without matching release date
             if (releaseDate == null) {
-                logger.debug("No release date found for brand: {}. Skipping record.", brandName);
-                return null;
+                logger.debug("No release date found for brand: {}. Using current date.", brandName);
+                releaseDate = LocalDate.now();
             }
 
             return new CarBrand(
@@ -144,8 +145,10 @@ public class DataMerger {
      * The carBrandMap is structured as Brand -> Model, so we reverse lookup Model -> Brand.
      */
     private String findBrandForModel(String model) {
+        if (model == null) return null;
+        
         return carBrandMap.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(model))
+                .filter(entry -> entry.getValue().equalsIgnoreCase(model))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);

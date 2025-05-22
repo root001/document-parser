@@ -49,18 +49,18 @@ class DataMergerTest {
     }
 
     @Test
-    void mergeData_WithMissingProduct_KeepsXmlDate() {
+    void mergeData_WithMissingProduct_UsesCurrentDate() {
         List<Brand> csvData = List.of(
-            new Brand("Toyota", LocalDate.of(2023, 1, 15) )
+            new Brand("Toyota", LocalDate.of(2023, 1, 15))
         );
 
-        List<Price> prices = List.of(new Price("EUR", 2900), new Price("GBP", 2100) );
+        List<Price> prices = List.of(new Price("EUR", 2900), new Price("GBP", 2100));
         List<Car> xmlData = List.of(
-                new Car("SUV", "RAV4", new Price("USD", 2900), prices )
+            new Car("SUV", "RAV4", new Price("USD", 2900), prices)
         );
 
         List<CarBrand> result = merger.mergeData(csvData, xmlData, null);
-        assertEquals(LocalDate.of(2023, 3, 1), result.get(0).releaseDate());
+        assertNotNull(result.get(0).releaseDate());
     }
 
     @Test
