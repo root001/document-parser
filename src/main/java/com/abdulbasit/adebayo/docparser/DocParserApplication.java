@@ -12,7 +12,23 @@ import org.slf4j.LoggerFactory;
 public class DocParserApplication {
 
 	public static void main(String[] args) {
+		if (args.length > 0 && ("--help".equals(args[0]) || "-h".equals(args[0]))) {
+			printHelp();
+			System.exit(0);
+		}
 		SpringApplication.run(DocParserApplication.class, args);
+	}
+
+	private static void printHelp() {
+		System.out.println("DocParser - Document Processing Tool");
+		System.out.println("\nUsage:");
+		System.out.println("  java -jar docparser.jar [config.yaml]");
+		System.out.println("\nOptions:");
+		System.out.println("  -h, --help    Show this help message");
+		System.out.println("\nArguments:");
+		System.out.println("  config.yaml   Path to configuration file (YAML format)");
+		System.out.println("\nExample:");
+		System.out.println("  java -jar docparser.jar config.yaml");
 	}
 
 	@Component
