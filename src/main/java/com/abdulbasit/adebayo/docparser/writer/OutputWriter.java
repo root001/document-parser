@@ -3,7 +3,8 @@ package com.abdulbasit.adebayo.docparser.writer;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper; // Make sure IDE shows no error here
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.util.XmlRootNameLookup;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,14 +39,12 @@ public class OutputWriter {
         
         // Configure XML output
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+        // Configure XML output
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
         
-        // Create wrapper element
-        String rootName = "products";
-        XmlMapper mapper = (XmlMapper) xmlMapper.writer()
-            .withRootName(rootName);
-        
-        mapper.writeValue(outputPath.toFile(), cars);
+        // Create wrapper element with root name
+        xmlMapper.setAnnotationIntrospector(new XmlRootNameLookup());
+        xmlMapper.writeValue(outputPath.toFile(), cars);
     }
 
     // For testing purposes only
