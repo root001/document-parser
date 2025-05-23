@@ -32,9 +32,11 @@ public class XmlParser {
     }
 
     public List<Car> parse(Path xmlPath) throws ParseException {
+        logger.info("Starting XML parsing for file: {}", xmlPath);
         List<Car> releases = new ArrayList<>();
         
         try {
+            logger.debug("Attempting to parse XML document");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlPath.toFile());

@@ -50,6 +50,10 @@ public class DataMerger {
      * @return List of merged and filtered CarBrand objects
      */
     public List<CarBrand> mergeData(List<Brand> csvData, List<Car> xmlData, Predicate<CarBrand> filter) {
+        logger.info("Starting data merge with {} CSV records and {} XML records", 
+            csvData != null ? csvData.size() : 0,
+            xmlData != null ? xmlData.size() : 0);
+            
         // Ensure brand mapping is initialized
         ensureBrandMappingInitialized();
 

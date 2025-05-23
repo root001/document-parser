@@ -23,9 +23,11 @@ public class CsvParser {
     private static final String CSV_DELIMITER = ",";
 
     public List<Brand> parse(Path csvPath) throws ParseException, IOException {
+        logger.info("Starting CSV parsing for file: {}", csvPath);
         List<Brand> releases = new ArrayList<>();
         
         try (BufferedReader reader = Files.newBufferedReader(csvPath)) {
+            logger.debug("Opened CSV file successfully");
             String line;
             int lineNumber = 0;
             
