@@ -4,6 +4,8 @@ import com.abdulbasit.adebayo.docparser.config.Config;
 import com.abdulbasit.adebayo.docparser.config.ConfigLoader;
 import com.abdulbasit.adebayo.docparser.exception.ConfigException;
 import com.abdulbasit.adebayo.docparser.filter.BrandPriceFilter;
+import com.abdulbasit.adebayo.docparser.model.Brand;
+import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +65,10 @@ public class Orchestrator {
             Path xmlPath = Paths.get(config.getInput_xml());
 
             logger.info("Parsing CSV data from: {}", csvPath);
-            List<com.abdulbasit.adebayo.docparser.model.Brand> csvData = csvParser.parse(csvPath);
+            List<Brand> csvData = csvParser.parse(csvPath);
 
             logger.info("Parsing XML data from: {}", xmlPath);
-            List<com.abdulbasit.adebayo.docparser.model.Car> xmlData = xmlParser.parse(xmlPath);
+            List<Car> xmlData = xmlParser.parse(xmlPath);
 
             logger.info("Merging data...");
             List<CarBrand> mergedData = dataMerger.mergeData(csvData, xmlData, filter);
