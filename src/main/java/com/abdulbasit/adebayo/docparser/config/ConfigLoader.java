@@ -17,7 +17,6 @@ import java.nio.file.Paths;
 public class ConfigLoader {
     private static final Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
 
-    @Bean
     public Config loadConfig(String filePath) throws ConfigException {
         try (InputStream inputStream = Files.newInputStream(Paths.get(filePath))) {
             LoaderOptions loaderOptions = new LoaderOptions();
