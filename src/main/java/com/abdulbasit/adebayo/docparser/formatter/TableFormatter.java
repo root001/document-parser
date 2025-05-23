@@ -16,22 +16,32 @@ public class TableFormatter {
         StringBuilder builder = new StringBuilder();
         
         // Header
-        builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
-            "Brand", "Model", "Release Date (yyyy,dd,MM)", "Model", "Currency", "Amount"));
+        builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
+            "Brand", "Model", "Release Date", "Currency", "Amount"));
         
         // Divider
-        builder.append(String.format("|-%" + BRAND_WIDTH + "s-|-%" + MODEL_WIDTH + "s-|-%" + DATE_WIDTH + "s-|-%" + MODEL_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
-            "", "", "", "", "", ""));
+        builder.append(String.format("|-%" + BRAND_WIDTH + "s-|-%" + MODEL_WIDTH + "s-|-%" + DATE_WIDTH + "s-|-%" + CUR_WIDTH + "s-|-%" + AMOUNT_WIDTH + "s-|\n",
+            "", "", "", "", ""));
         
         // Rows
+        if (releases == null || releases.isEmpty()) {
+            return builder.toString();
+        }
+
         for (CarBrand release : releases) {
-            builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + PRODUCT_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
+            String currency = "";
+            String amount = "";
+            if (release.price() != null) {
+                currency = release.price().currency();
+                amount = String.valueOf(release.price().amount());
+            }
+            
+            builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
                 truncate(release.brandType(), BRAND_WIDTH),
-                truncate(release.productName(), PRODUCT_WIDTH),
-                DateFormatter.formatForOutput(release.releaseDate()),
                 truncate(release.model(), MODEL_WIDTH),
-                truncate(release.price().currency(), CUR_WIDTH),
-                    truncate(String.valueOf(release.price().amount()), AMOUNT_WIDTH)));
+                DateFormatter.formatForOutput(release.releaseDate()),
+                truncate(currency, CUR_WIDTH),
+                truncate(amount, AMOUNT_WIDTH)));
         }
         
         return builder.toString();

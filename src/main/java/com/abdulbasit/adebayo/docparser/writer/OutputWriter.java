@@ -39,13 +39,16 @@ public class OutputWriter {
 
     public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
-
-        // Configure XML output with indentation
+        
+        // Configure XML output
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        // Set the correct annotation introspector pair
         xmlMapper.setAnnotationIntrospector(new JacksonXmlAnnotationIntrospector());
-        xmlMapper.writeValue(outputPath.toFile(), cars);
+        
+        // Create wrapper object for proper XML structure
+        Map<String, Object> wrapper = new HashMap<>();
+        wrapper.put("cars", cars);
+        
+        xmlMapper.writeValue(outputPath.toFile(), wrapper);
     }
 
     // For testing purposes only
