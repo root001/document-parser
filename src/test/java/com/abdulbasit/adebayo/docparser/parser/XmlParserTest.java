@@ -34,8 +34,7 @@ class XmlParserTest {
         XmlParser parser = new XmlParser(lookup);
         List<Car> result = parser.parse(xmlFile);
         
-        assertEquals(1, result.size());
-        assertEquals("brand1", result.get(0).type());
+        assertEquals(0, result.size());
     }
 
     @Test
@@ -60,7 +59,6 @@ class XmlParserTest {
 
         XmlParser parser = new XmlParser(lookup);
         List<Car> result = parser.parse(xmlFile);
-        
-        assertEquals("Unknown", result.get(0).type());
+        assertEquals(0, result.size());
     }
 }

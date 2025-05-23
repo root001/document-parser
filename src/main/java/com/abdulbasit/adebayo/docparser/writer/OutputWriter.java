@@ -1,6 +1,7 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.XmlAnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.jaxb.XmlJaxbAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +28,8 @@ public class OutputWriter {
     static {
         jsonMapper = new ObjectMapper();
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        jsonMapper.registerModule(new JavaTimeModule());
+        jsonMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         // If you need to prevent dates from being written as timestamps:
         // jsonMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
@@ -33,21 +37,26 @@ public class OutputWriter {
         // If your line 26 error points here, it's definitive.
         xmlMapper = new XmlMapper();
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        xmlMapper.registerModule(new JavaTimeModule());
+        xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         // If you need to prevent dates from being written as timestamps:
         // xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public static void writeJson(Path outputPath, List<Car> cars) throws IOException {
+    public static void writeJson(Path outputPath, List<CarBrand> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
+
         jsonMapper.writeValue(outputPath.toFile(), cars);
     }
 
-    public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
+    public static void writeXml(Path outputPath, List<CarBrand> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
         
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         // Create root wrapper element
         mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
     }

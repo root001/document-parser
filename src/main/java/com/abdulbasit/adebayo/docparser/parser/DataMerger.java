@@ -33,7 +33,7 @@ public class DataMerger {
     private void ensureBrandMappingInitialized() {
         if (carBrandMap == null) {
             logger.info("--- Static hardcoded test : {}", carBrandMappingConfig);
-            logger.info("--- Mapping from config file : {}", carBrandMappingConfig2);
+            logger.info("--- +++ Mapping from config file : {}", carBrandMappingConfig2);
             this.carBrandMap = parseCarBrandMapping(carBrandMappingConfig);
             logger.info("Initialized car brand mapping with {} entries", carBrandMap.size());
         }

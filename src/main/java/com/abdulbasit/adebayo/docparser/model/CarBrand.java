@@ -2,9 +2,7 @@ package com.abdulbasit.adebayo.docparser.model;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.abdulbasit.adebayo.docparser.util.DateFormatter;
 
 public record CarBrand(
