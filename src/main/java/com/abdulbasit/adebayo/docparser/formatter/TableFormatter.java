@@ -48,10 +48,11 @@ public class TableFormatter {
                 amount = String.valueOf(release.price().amount());
             }
             
-            builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
+            builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + PRODUCT_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
                 truncate(release.brandType(), BRAND_WIDTH),
                 truncate(release.model(), MODEL_WIDTH),
                 DateFormatter.formatForOutput(release.releaseDate()),
+                truncate(release.productName(), PRODUCT_WIDTH),
                 truncate(currency, CUR_WIDTH),
                 truncate(amount, AMOUNT_WIDTH)));
         }
