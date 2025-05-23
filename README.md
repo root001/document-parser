@@ -22,14 +22,88 @@ DocParser is a Spring Boot application that merges and processes car brand data 
 mvn clean package
 ```
 
-2. Run with a config file:
-```bash
-java -jar target/docparser.jar config.yaml
-```
-
-3. Get help:
+2. Get help:
 ```bash
 java -jar target/docparser.jar --help
+```
+
+## Scenario Commands
+
+### 1. Filtering Scenarios
+
+# Filter by Brand and Price (Toyota between 20k-50k)
+java -jar target/docparser.jar config-filter-brand-price.yaml
+
+# Filter by Brand and Date (Honda between 2020-2025)
+java -jar target/docparser.jar config-filter-brand-date.yaml
+
+### 2. Sorting Scenarios
+
+# Sort by Release Date (newest first)
+java -jar target/docparser.jar config-sort-date-desc.yaml
+
+# Sort by Price (highest first)
+java -jar target/docparser.jar config-sort-price-desc.yaml
+
+### 3. Output Format Scenarios
+
+# Output as JSON
+java -jar target/docparser.jar config-output-json.yaml
+
+# Output as XML 
+java -jar target/docparser.jar config-output-xml.yaml
+
+# Output as Table
+java -jar target/docparser.jar config-output-table.yaml
+
+### 4. Currency Conversion Scenarios
+
+# Convert currencies by vehicle type
+java -jar target/docparser.jar config-currency-conversion.yaml
+
+## Sample Config Files
+
+### config-filter-brand-price.yaml
+```yaml
+inputCsv: data/CarsBrand.csv
+inputXml: data/carsType.xml
+outputPath: output/
+outputFormat: json
+filters:
+  brandPrice:
+    brand: "Toyota"
+    minPrice: 20000
+    maxPrice: 50000
+```
+
+### config-sort-price-desc.yaml  
+```yaml
+inputCsv: data/CarsBrand.csv
+inputXml: data/carsType.xml 
+outputPath: output/
+outputFormat: json
+sort:
+  by: "price"
+  order: "desc"
+```
+
+### config-output-table.yaml
+```yaml
+inputCsv: data/CarsBrand.csv
+inputXml: data/carsType.xml
+outputPath: output/
+outputFormat: table
+```
+
+### config-currency-conversion.yaml
+```yaml
+inputCsv: data/CarsBrand.csv
+inputXml: data/carsType.xml
+outputPath: output/
+currencyMapping:
+  SUV: EUR
+  Sedan: JPY
+  Truck: USD
 ```
 
 ## Configuration
