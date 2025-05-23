@@ -1,8 +1,11 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
