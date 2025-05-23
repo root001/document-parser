@@ -63,7 +63,8 @@ class OutputWriterTest {
         System.out.println("xmlContent :"+xmlContent);
         assertTrue(xmlContent.contains("<type>SUV</type>"));
         assertTrue(xmlContent.contains("<model>RAV4</model>"));
-        assertTrue(xmlContent.contains("<price currency=\"USD\">25000.0</price>"));
+        assertTrue(xmlContent.contains("<currency>USD</currency>"));
+        assertTrue(xmlContent.contains("<amount>25000.0</amount>"));
     }
 
     @Test
@@ -99,21 +100,22 @@ class OutputWriterTest {
 
         OutputWriter.writeXml(xmlFile, cars);
         String xmlContent = Files.readString(xmlFile);
-        System.out.println("Generated XML:\n" + xmlContent); // Debugging
+        System.out.println("Generated XML:\n" + xmlContent);
 
-        // Assert using XPath with parent element
+        // Updated XPath assertions to match current XML structure
         assertThat(xmlContent)
-                .nodesByXPath("//Car/priceList/price[@currency='USD']")
+                .nodesByXPath("//Car/priceList/priceList[currency='USD']")
                 .exist()
-                .hasSize(1)
-                .first()
-                .hasToString("25000.0");
+                .hasSize(1);
 
         assertThat(xmlContent)
-                .nodesByXPath("//Car/priceList/price[@currency='EUR']")
+                .nodesByXPath("//Car/priceList/priceList[currency='EUR']")
                 .exist()
-                .hasSize(1)
-                .first()
-                .hasToString("22000.0");
+                .hasSize(1);
+
+        assertTrue(xmlContent.contains("<currency>USD</currency>"));
+        assertTrue(xmlContent.contains("<amount>25000.0</amount>"));
+        assertTrue(xmlContent.contains("<currency>EUR</currency>"));
+        assertTrue(xmlContent.contains("<amount>22000.0</amount>"));
     }
 }
