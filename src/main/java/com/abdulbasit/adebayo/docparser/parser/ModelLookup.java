@@ -8,8 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -29,15 +27,14 @@ public class ModelLookup {
     private final Map<String, String> modelToBrandMap;
     private final boolean caseSensitive;
 
-    @Autowired
-    public ModelLookup(@Value("${model.lookup.path}") String lookupFilePath) throws IOException {
+    public ModelLookup(Path lookupFilePath) throws IOException {
         this(lookupFilePath, false);
     }
 
-    public ModelLookup(@Value("${model.lookup.path}") String lookupFilePath, boolean caseSensitive) throws IOException {
+    public ModelLookup(Path lookupFilePath, boolean caseSensitive) throws IOException {
         this.modelToBrandMap = new HashMap<>();
         this.caseSensitive = caseSensitive;
-        loadLookupData(Paths.get(lookupFilePath));
+        loadLookupData(lookupFilePath);
     }
 
     private void loadLookupData(Path lookupFilePath) throws IOException {

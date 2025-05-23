@@ -15,11 +15,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
+import com.abdulbasit.adebayo.docparser.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Component
 public class XmlParser {
@@ -30,11 +32,11 @@ public class XmlParser {
     private final boolean caseSensitiveLookup;
 
     @Autowired
-    public XmlParser(ModelLookup modelLookup) {
-        this(modelLookup, false);
+    public XmlParser(Config config, ModelLookup modelLookup) throws IOException {
+        this(config, modelLookup, false);
     }
 
-    public XmlParser(ModelLookup modelLookup, boolean caseSensitiveLookup) {
+    public XmlParser(Config config, ModelLookup modelLookup, boolean caseSensitiveLookup) {
         this.modelLookup = modelLookup;
         this.caseSensitiveLookup = caseSensitiveLookup;
     }
@@ -42,7 +44,7 @@ public class XmlParser {
     public List<Car> parse(Path xmlPath) throws ParseException {
         logger.info("Starting XML parsing for file: {}", xmlPath);
         List<Car> releases = new ArrayList<>();
-        
+
         try {
             if (!Files.exists(xmlPath)) {
                 logger.error("XML file not found at path: {}", xmlPath);
