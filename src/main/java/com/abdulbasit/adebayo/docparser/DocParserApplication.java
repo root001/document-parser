@@ -11,12 +11,22 @@ import org.slf4j.LoggerFactory;
 @SpringBootApplication
 public class DocParserApplication {
 
+	private static final Logger logger = LoggerFactory.getLogger(DocParserApplication.class);
+
 	public static void main(String[] args) {
+		logger.info("Starting DocParser with args: {}", (Object) args);
 		if (args.length > 0 && ("--help".equals(args[0]) || "-h".equals(args[0]))) {
 			printHelp();
 			System.exit(0);
 		}
-		SpringApplication.run(DocParserApplication.class, args);
+		
+		try {
+			SpringApplication.run(DocParserApplication.class, args);
+			logger.info("Application started successfully");
+		} catch (Exception e) {
+			logger.error("Application failed to start", e);
+			System.exit(1);
+		}
 	}
 
 	private static void printHelp() {
