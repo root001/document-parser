@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +24,6 @@ import java.util.Map;
 public class ModelLookup {
     private static final Logger logger = LoggerFactory.getLogger(ModelLookup.class);
     private static final String CSV_DELIMITER = ",";
-    private static final String UNKNOWN_BRAND = "Unknown";
-    
     private static final String UNKNOWN_BRAND = "Unknown";
 
     private final Map<String, String> modelToBrandMap;
