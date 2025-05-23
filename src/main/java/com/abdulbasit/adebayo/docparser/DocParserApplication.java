@@ -21,10 +21,16 @@ public class DocParserApplication {
 		}
 		
 		try {
-			SpringApplication.run(DocParserApplication.class, args);
-			logger.info("Application started successfully");
+			logger.info("Starting DocParser with args: {}", (Object) args);
+			ConfigurableApplicationContext context = SpringApplication.run(DocParserApplication.class, args);
+			
+			DocumentProcessor processor = context.getBean(DocumentProcessor.class);
+			processor.processDocuments();
+			
+			logger.info("Application completed successfully");
+			System.exit(0);
 		} catch (Exception e) {
-			logger.error("Application failed to start", e);
+			logger.error("Application failed", e);
 			System.exit(1);
 		}
 	}

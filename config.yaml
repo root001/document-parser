@@ -2,7 +2,7 @@
 inputCsv: data/CarsBrand.csv
 inputXml: data/carsType.xml
 outputPath: output/
-logLevel: info  # debug/info/warn/error
+logLevel: debug  # debug/info/warn/error
 
 # Scenario 1: Filtering options (choose one or combine)
 filters:
