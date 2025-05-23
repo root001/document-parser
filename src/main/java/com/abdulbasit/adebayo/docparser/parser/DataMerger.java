@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class DataMerger {
     private static final Logger logger = LoggerFactory.getLogger(DataMerger.class);
 
