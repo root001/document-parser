@@ -36,10 +36,6 @@ public class ConfigLoader {
                 throw new ConfigException("Missing required field: outputPath");
             }
 
-            if (config.getCarsBrandCsvPath() == null) {
-                throw new ConfigException("Missing required field: carsBrandCsvPath");
-            }
-
             logger.info("Loaded configuration: {}", config);
 
             // Update log level if specified in config (using SLF4J approach)
