@@ -66,7 +66,7 @@ public class OutputWriter {
             
             ArrayNode priceListNode = carNode.putArray("priceList");
             for (Price price : car.priceList()) {
-                ObjectNode priceNode = priceListNode.addObject("price");
+                ObjectNode priceNode = priceListNode.addObject();
                 priceNode.put("currency", price.currency());
                 priceNode.put("amount", price.amount());
             }
