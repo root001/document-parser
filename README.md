@@ -24,42 +24,42 @@ mvn clean package
 
 2. Get help:
 ```bash
-java -jar target/docparser.jar --help
+java -jar target\docparser-0.0.1-SNAPSHOT.jar --help
 ```
-
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config.yaml --logLevel=debug
 ## Scenario Commands
 
 ### 1. Filtering Scenarios
 
 # Filter by Brand and Price (Toyota between 20k-50k)
-java -jar target/docparser.jar config-filter-brand-price.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-filter-brand-price.yaml
 
 # Filter by Brand and Date (Honda between 2020-2025)
-java -jar target/docparser.jar config-filter-brand-date.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-filter-brand-date.yaml
 
 ### 2. Sorting Scenarios
 
 # Sort by Release Date (newest first)
-java -jar target/docparser.jar config-sort-date-desc.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-sort-date-desc.yaml
 
 # Sort by Price (highest first)
-java -jar target/docparser.jar config-sort-price-desc.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-sort-price-desc.yaml
 
 ### 3. Output Format Scenarios
 
 # Output as JSON
-java -jar target/docparser.jar config-output-json.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-output-json.yaml
 
 # Output as XML 
-java -jar target/docparser.jar config-output-xml.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-output-xml.yaml
 
 # Output as Table
-java -jar target/docparser.jar config-output-table.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-output-table.yaml
 
 ### 4. Currency Conversion Scenarios
 
 # Convert currencies by vehicle type
-java -jar target/docparser.jar config-currency-conversion.yaml
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config-currency-conversion.yaml
 
 ## Sample Config Files
 
@@ -192,12 +192,12 @@ Common errors and solutions:
 
 ### Filtering by Price Range
 ```bash
-java -jar target/docparser.jar config.yaml --min-price 20000 --max-price 30000
+java -jar target\docparser-0.0.1-SNAPSHOT.jar config.yaml --min-price 20000 --max-price 30000
 ```
 
 ### Health Check
 ```bash
-java -jar target/docparser.jar --health
+java -jar target\docparser-0.0.1-SNAPSHOT.jar --health
 ```
 Returns: `{"status": "ok"}`
 

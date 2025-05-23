@@ -2,6 +2,10 @@ package com.abdulbasit.adebayo.docparser;
 
 import com.abdulbasit.adebayo.docparser.config.Config;
 import com.abdulbasit.adebayo.docparser.config.ConfigLoader;
+import com.abdulbasit.adebayo.docparser.formatter.TableFormatter;
+import com.abdulbasit.adebayo.docparser.model.Brand;
+import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.parser.*;
 import com.abdulbasit.adebayo.docparser.writer.OutputWriter;
 import org.slf4j.Logger;

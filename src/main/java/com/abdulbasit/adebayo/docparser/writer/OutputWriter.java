@@ -1,6 +1,7 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -37,19 +38,19 @@ public class OutputWriter {
         // xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public static void writeJson(Path outputPath, List<Car> cars) throws IOException {
+    public static void writeJson(Path outputPath, List<CarBrand> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
         jsonMapper.writeValue(outputPath.toFile(), cars);
     }
 
-    public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
+    public static void writeXml(Path outputPath, List<CarBrand> carBrand) throws IOException {
         Files.createDirectories(outputPath.getParent());
         
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         
         // Create root wrapper element
-        mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
+        mapper.writeValue(outputPath.toFile(), new XmlCarList(carBrand));
     }
 
     // For testing purposes only
