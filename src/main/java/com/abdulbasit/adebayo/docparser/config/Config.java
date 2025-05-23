@@ -67,6 +67,8 @@ public class Config {
 
     public void setFilters(Map<String, Object> filters) {
         this.filters = filters;
+    }
+
     @JsonProperty("sort")
     private Map<String, String> sort;
     @JsonProperty("currencyMapping")
