@@ -15,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,12 @@ public class XmlParser {
     private final ModelLookup modelLookup;
     private final boolean caseSensitiveLookup;
 
+    @Autowired
     public XmlParser(ModelLookup modelLookup) {
         this(modelLookup, false);
     }
 
+    @Autowired
     public XmlParser(ModelLookup modelLookup, boolean caseSensitiveLookup) {
         this.modelLookup = modelLookup;
         this.caseSensitiveLookup = caseSensitiveLookup;
