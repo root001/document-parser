@@ -1,9 +1,9 @@
 package com.abdulbasit.adebayo.docparser.config;
 
 import com.abdulbasit.adebayo.docparser.exception.ConfigException;
+import org.springframework.context.annotation.Bean;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
-import org.springframework.context.annotation.Bean;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
@@ -62,6 +62,21 @@ public class ConfigLoader {
             logger.info("Set log level to: {}", logLevel);
         } catch (Exception e) {
             logger.warn("Could not set log level to {}: {}", logLevel, e.getMessage());
+            return config;
+        } catch (Exception e) {
+            throw new ConfigException("Failed to load config: " + e.getMessage());
+        }
+    }
+
+    @Bean
+    public Config config(ConfigLoader configLoader) {
+        try {
+            // Assuming the config path is hardcoded or passed as a system property/env variable
+            // Replace "config.yaml" with the actual path if it's different
+            return configLoader.loadConfig("config.yaml");
+        } catch (ConfigException e) {
+            logger.error("Failed to load configuration: {}", e.getMessage());
+            throw new RuntimeException("Failed to load configuration", e); // Or handle it differently
         }
     }
 }
