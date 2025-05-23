@@ -16,12 +16,24 @@ public class TableFormatter {
         StringBuilder builder = new StringBuilder();
         
         // Header
-        builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
-            "Brand", "Model", "Release Date", "Currency", "Amount"));
+        builder.append("| Brand      | Model      | Release Date   | Currency | Amount     |\n");
+        builder.append("|------------|------------|----------------|----------|------------|\n");
         
-        // Divider
-        builder.append(String.format("|-%" + BRAND_WIDTH + "s-|-%" + MODEL_WIDTH + "s-|-%" + DATE_WIDTH + "s-|-%" + CUR_WIDTH + "s-|-%" + AMOUNT_WIDTH + "s-|\n",
-            "", "", "", "", ""));
+        if (releases == null || releases.isEmpty()) {
+            return builder.toString();
+        }
+
+        for (CarBrand release : releases) {
+            String currency = release.price() != null ? release.price().currency() : "";
+            String amount = release.price() != null ? String.format("%.2f", release.price().amount()) : "";
+            
+            builder.append(String.format("| %-10s | %-10s | %-15s | %-8s | %-10s |\n",
+                truncate(release.brandType(), 10),
+                truncate(release.model(), 10),
+                DateFormatter.formatForOutput(release.releaseDate()),
+                truncate(currency, 8),
+                truncate(amount, 10)));
+        }
         
         // Rows
         if (releases == null || releases.isEmpty()) {

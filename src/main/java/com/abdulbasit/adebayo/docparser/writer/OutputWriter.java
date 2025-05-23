@@ -43,14 +43,33 @@ public class OutputWriter {
         Files.createDirectories(outputPath.getParent());
         
         // Configure XML output
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        xmlMapper.setAnnotationIntrospector(new JacksonXmlAnnotationIntrospector());
+        XmlMapper mapper = new XmlMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         
-        // Create wrapper object for proper XML structure
-        Map<String, Object> wrapper = new HashMap<>();
-        wrapper.put("cars", cars);
+        // Create root element
+        ObjectNode root = mapper.createObjectNode();
+        ArrayNode carsNode = root.putArray("Car");
         
-        xmlMapper.writeValue(outputPath.toFile(), wrapper);
+        for (Car car : cars) {
+            ObjectNode carNode = carsNode.addObject();
+            carNode.put("type", car.type());
+            carNode.put("model", car.model());
+            
+            if (car.price() != null) {
+                ObjectNode priceNode = carNode.putObject("price");
+                priceNode.put("currency", car.price().currency());
+                priceNode.put("amount", car.price().amount());
+            }
+            
+            ArrayNode priceListNode = carNode.putArray("priceList");
+            for (Price price : car.priceList()) {
+                ObjectNode priceNode = priceListNode.addObject("price");
+                priceNode.put("currency", price.currency());
+                priceNode.put("amount", price.amount());
+            }
+        }
+        
+        mapper.writeValue(outputPath.toFile(), root);
     }
 
     // For testing purposes only
