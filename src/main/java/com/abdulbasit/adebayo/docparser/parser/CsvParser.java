@@ -1,5 +1,6 @@
 package com.abdulbasit.adebayo.docparser.parser;
 
+import org.springframework.stereotype.Component;
 import com.abdulbasit.adebayo.docparser.model.Brand;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.exception.ParseException;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CsvParser {
     private static final Logger logger = LoggerFactory.getLogger(CsvParser.class);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
