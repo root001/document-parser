@@ -45,34 +45,11 @@ public class OutputWriter {
     public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
         
-        // Configure XML output
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         
-        // Create root element
-        ObjectNode root = mapper.createObjectNode();
-        ArrayNode carsNode = root.putArray("Car");
-        
-        for (Car car : cars) {
-            ObjectNode carNode = carsNode.addObject();
-            carNode.put("type", car.type());
-            carNode.put("model", car.model());
-            
-            if (car.price() != null) {
-                ObjectNode priceNode = carNode.putObject("price");
-                priceNode.put("currency", car.price().currency());
-                priceNode.put("amount", car.price().amount());
-            }
-            
-            ArrayNode priceListNode = carNode.putArray("priceList");
-            for (Price price : car.priceList()) {
-                ObjectNode priceNode = priceListNode.addObject();
-                priceNode.put("currency", price.currency());
-                priceNode.put("amount", price.amount());
-            }
-        }
-        
-        mapper.writeValue(outputPath.toFile(), root);
+        // Create root wrapper element
+        mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
     }
 
     // For testing purposes only

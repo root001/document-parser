@@ -34,32 +34,12 @@ public class TableFormatter {
             String currency = release.price() != null ? release.price().currency() : "";
             String amount = release.price() != null ? String.format("%.2f", release.price().amount()) : "";
             
-            builder.append(String.format("| %-10s | %-10s | %-15s | %-8s | %-10s |\n",
-                truncate(release.brandType(), 10),
-                truncate(release.model(), 10),
-                DateFormatter.formatForOutput(release.releaseDate()),
-                truncate(currency, 8),
-                truncate(amount, 10)));
-        }
-        
-        // Rows
-        if (releases == null || releases.isEmpty()) {
-            return builder.toString();
-        }
-
-        for (CarBrand release : releases) {
-            String currency = "";
-            String amount = "";
-            if (release.price() != null) {
-                currency = release.price().currency();
-                amount = String.valueOf(release.price().amount());
-            }
-            
+            String productName = release.productName() != null ? release.productName() : "";
             builder.append(String.format("| %-" + BRAND_WIDTH + "s | %-" + MODEL_WIDTH + "s | %-" + DATE_WIDTH + "s | %-" + PRODUCT_WIDTH + "s | %-" + CUR_WIDTH + "s | %-" + AMOUNT_WIDTH + "s |\n",
                 truncate(release.brandType(), BRAND_WIDTH),
                 truncate(release.model(), MODEL_WIDTH),
                 DateFormatter.formatForOutput(release.releaseDate()),
-                truncate(release.productName(), PRODUCT_WIDTH),
+                truncate(productName, PRODUCT_WIDTH),
                 truncate(currency, CUR_WIDTH),
                 truncate(amount, AMOUNT_WIDTH)));
         }
