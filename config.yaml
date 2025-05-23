@@ -1,8 +1,28 @@
-inputCsv:
-input.csv
-inputXml:
-input.xml
-outputPath:
-output/
-logLevel:
-debug
+inputCsv: input.csv
+inputXml: input.xml
+outputPath: output/
+logLevel: debug
+outputFormat: table  # json/xml/table
+
+# Filtering options (choose one or combine)
+filters:
+  brandPrice:
+    brand: "Toyota"  # Brand name to filter
+    minPrice: 20000  # Optional minimum price
+    maxPrice: 50000  # Optional maximum price
+  
+  brandDate:
+    brand: "Honda"   # Brand name to filter
+    startDate: "2020,01,01"  # Format: yyyy,dd,MM
+    endDate: "2025,31,12"    # Format: yyyy,dd,MM
+
+# Sorting options (choose one)
+sort:
+  by: "date"  # date/price
+  order: "desc"  # asc/desc
+
+# Currency mapping by vehicle type
+currencyMapping:
+  SUV: EUR
+  Sedan: JPY  
+  Truck: USD
