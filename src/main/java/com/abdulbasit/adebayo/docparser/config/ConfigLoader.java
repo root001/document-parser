@@ -3,6 +3,7 @@ package com.abdulbasit.adebayo.docparser.config;
 import com.abdulbasit.adebayo.docparser.exception.ConfigException;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.springframework.context.annotation.Bean;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 public class ConfigLoader {
     private static final Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
 
+    @Bean
     public Config loadConfig(String filePath) throws ConfigException {
         try (InputStream inputStream = Files.newInputStream(Paths.get(filePath))) {
             LoaderOptions loaderOptions = new LoaderOptions();
