@@ -32,7 +32,6 @@ public class XmlParser {
         this(modelLookup, false);
     }
 
-    @Autowired
     public XmlParser(ModelLookup modelLookup, boolean caseSensitiveLookup) {
         this.modelLookup = modelLookup;
         this.caseSensitiveLookup = caseSensitiveLookup;
