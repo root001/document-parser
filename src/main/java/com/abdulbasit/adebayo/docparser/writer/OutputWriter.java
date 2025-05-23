@@ -3,9 +3,11 @@ package com.abdulbasit.adebayo.docparser.writer;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.XmlAnnotationIntrospector;
+import com.fasterxml.jackson.dataformat.xml.jaxb.XmlJaxbAnnotationIntrospector;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,14 +39,12 @@ public class OutputWriter {
 
     public static void writeXml(Path outputPath, List<Car> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
-        
-        // Configure XML output
+
+        // Configure XML output with indentation
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        // Configure XML output
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        
-        // Configure XML output with default annotation handling
-        xmlMapper.setAnnotationIntrospector(new XmlAnnotationIntrospector.Pair());
+
+        // Set the correct annotation introspector pair
+        xmlMapper.setAnnotationIntrospector(new JacksonXmlAnnotationIntrospector());
         xmlMapper.writeValue(outputPath.toFile(), cars);
     }
 

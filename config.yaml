@@ -1,0 +1,8 @@
+inputCsv:
+input.csv
+inputXml:
+input.xml
+outputPath:
+output/
+logLevel:
+debug

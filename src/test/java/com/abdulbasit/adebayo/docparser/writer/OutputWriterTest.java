@@ -3,6 +3,7 @@ package com.abdulbasit.adebayo.docparser.writer;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.Price;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -11,10 +12,14 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.xmlunit.assertj.XmlAssert.assertThat;
+
+import org.xmlunit.assertj.XmlAssert;
 
 class OutputWriterTest {
     private static final Price PRICE = new Price("USD", 25000);
     private static final List<Price> PRICE_LIST = List.of(PRICE);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     void writeJson_RoundTrip_Success(@TempDir Path tempDir) throws Exception {
@@ -55,6 +60,7 @@ class OutputWriterTest {
         OutputWriter.writeXml(xmlFile, cars);
         
         String xmlContent = Files.readString(xmlFile);
+        System.out.println("xmlContent :"+xmlContent);
         assertTrue(xmlContent.contains("<type>SUV</type>"));
         assertTrue(xmlContent.contains("<model>RAV4</model>"));
         assertTrue(xmlContent.contains("<price currency=\"USD\">25000.0</price>"));
@@ -69,23 +75,45 @@ class OutputWriterTest {
         
         OutputWriter.writeJson(jsonFile, cars);
         String jsonContent = Files.readString(jsonFile);
-        assertTrue(jsonContent.contains("\"price\":null"));
-        assertTrue(jsonContent.contains("\"priceList\":[{\"currency\":\"USD\",\"amount\":25000.0}]"));
+        // Parse the JSON content
+        List<Car> actualCars = objectMapper.readValue(jsonContent, new TypeReference<>() {});
+        // Create the expected object
+        List<Car> expectedCars = List.of(
+                new Car("SUV", "RAV4", null, List.of(new Price("USD", 25000.0)))
+        );
+
+        // Assert equality
+        assertEquals(expectedCars, actualCars);
     }
 
     @Test
     void writeXml_MultiplePrices_IncludesAll(@TempDir Path tempDir) throws Exception {
         List<Price> multiplePrices = List.of(
-            new Price("USD", 25000),
-            new Price("EUR", 22000)
+                new Price("USD", 25000.0),
+                new Price("EUR", 22000.0)
         );
         List<Car> cars = List.of(
-            new Car("SUV", "RAV4", null, multiplePrices)
+                new Car("SUV", "RAV4", null, multiplePrices)
         );
         Path xmlFile = tempDir.resolve("cars.xml");
-        
+
         OutputWriter.writeXml(xmlFile, cars);
         String xmlContent = Files.readString(xmlFile);
-        assertTrue(xmlContent.contains("<priceList><price currency=\"USD\">25000.0</price><price currency=\"EUR\">22000.0</price></priceList>"));
+        System.out.println("Generated XML:\n" + xmlContent); // Debugging
+
+        // Assert using XPath with parent element
+        assertThat(xmlContent)
+                .nodesByXPath("//Car/priceList/price[@currency='USD']")
+                .exist()
+                .hasSize(1)
+                .first()
+                .hasToString("25000.0");
+
+        assertThat(xmlContent)
+                .nodesByXPath("//Car/priceList/price[@currency='EUR']")
+                .exist()
+                .hasSize(1)
+                .first()
+                .hasToString("22000.0");
     }
 }
