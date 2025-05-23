@@ -35,6 +35,22 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
+		<!-- Remove explicit logback-classic as it's included in spring-boot-starter -->
+
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<!-- Version managed by Spring Boot parent -->
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<!-- Version managed by Spring Boot parent -->
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -45,6 +61,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-assertj</artifactId>
+			<version>2.9.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.15.2</version>
+		</dependency>
+		<!-- REMOVED Log4j2 Core - it conflicts with Logback -->
 	</dependencies>
 
 	<build>

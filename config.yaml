@@ -1,0 +1,63 @@
+# Input file paths
+inputCsv: data/CarsBrand.csv
+inputXml: data/carsType.xml
+outputPath: output/
+logLevel: info  # debug/info/warn/error
+
+# Scenario 1: Filtering options (choose one or combine)
+filters:
+  # Option 1: Filter by Brand and Price range
+  brandPrice:
+    brand: "Toyota"  # Brand name to filter
+    minPrice: 20000  # Minimum price (optional)
+    maxPrice: 50000  # Maximum price (optional)
+  
+  # Option 2: Filter by Brand and Release Date range
+  brandDate:
+    brand: "Honda"   # Brand name to filter
+    startDate: "2020,01,01"  # Format: yyyy,dd,MM
+    endDate: "2025,31,12"    # Format: yyyy,dd,MM
+
+# Scenario 2: Sorting options
+sort:
+  by: "date"        # date/price - what to sort by
+  order: "desc"     # asc/desc - sort direction
+
+# Scenario 3: Output format options
+outputFormat: "table"  # table/xml/json
+
+# Scenario 4: Currency mapping by vehicle type
+currencyMapping:
+  SUV: EUR
+  Sedan: JPY
+  Truck: USD
+  Hatchback: GBP
+  Coupe: USD
+  Minivan: EUR
+
+# Example configurations for different scenarios:
+
+# Example 1: Filter by Brand and Price (Toyota between 20k-50k)
+# filters:
+#   brandPrice:
+#     brand: "Toyota"
+#     minPrice: 20000
+#     maxPrice: 50000
+# outputFormat: "table"
+
+# Example 2: Filter by Brand and Date (Honda between 2020-2025)
+# filters:
+#   brandDate:
+#     brand: "Honda"
+#     startDate: "2020,01,01"
+#     endDate: "2025,31,12"
+# outputFormat: "json"
+
+# Example 3: Sort by Price (highest to lowest)
+# sort:
+#   by: "price"
+#   order: "desc"
+# outputFormat: "xml"
+
+# Example 4: Default output with currency mapping
+# outputFormat: "table"
