@@ -1,13 +1,21 @@
 package com.abdulbasit.adebayo.docparser.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 public class Config {
+    @JsonProperty("inputCsv")
     private String inputCsv;
+    @JsonProperty("inputXml")
     private String inputXml;
+    @JsonProperty("outputPath")
     private String outputPath;
+    @JsonProperty("logLevel")
     private String logLevel = "info";
+    @JsonProperty("outputFormat")
     private String outputFormat = "json"; // json/xml/table
+    @JsonProperty("filters")
     private Map<String, Object> filters;
     private Map<String, String> sort;
     private Map<String, String> currencyMapping;
@@ -59,21 +67,8 @@ public class Config {
 
     public void setFilters(Map<String, Object> filters) {
         this.filters = filters;
-    }
-
-    public Map<String, String> getSort() {
-        return sort;
-    }
-
-    public void setSort(Map<String, String> sort) {
-        this.sort = sort;
-    }
-
-    public Map<String, String> getCurrencyMapping() {
-        return currencyMapping;
-    }
-
-    public void setCurrencyMapping(Map<String, String> currencyMapping) {
-        this.currencyMapping = currencyMapping;
-    }
+    @JsonProperty("sort")
+    private Map<String, String> sort;
+    @JsonProperty("currencyMapping")
+    private Map<String, String> currencyMapping;
 }
