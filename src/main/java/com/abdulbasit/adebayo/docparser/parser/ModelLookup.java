@@ -8,7 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ModelLookup {
     private static final Logger logger = LoggerFactory.getLogger(ModelLookup.class);
     private static final String CSV_DELIMITER = ",";
