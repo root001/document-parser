@@ -1,6 +1,7 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
 import com.abdulbasit.adebayo.docparser.model.Car;
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +24,7 @@ class OutputWriterTest {
 
     @Test
     void writeJson_RoundTrip_Success(@TempDir Path tempDir) throws Exception {
-        List<Car> cars = List.of(
+        List<CarBrand> cars = List.of(
             new Car("SUV", "RAV4", PRICE, PRICE_LIST)
         );
         Path jsonFile = tempDir.resolve("cars.json");
@@ -38,8 +39,8 @@ class OutputWriterTest {
 
     @Test
     void writeXml_RoundTrip_Success(@TempDir Path tempDir) throws Exception {
-        List<Car> cars = List.of(
-            new Car("SUV", "RAV4", PRICE, PRICE_LIST)
+        List<CarBrand> cars = List.of(
+            new CarBrand("SUV", "RAV4", PRICE, PRICE_LIST)
         );
         Path xmlFile = tempDir.resolve("cars.xml");
         
@@ -53,7 +54,7 @@ class OutputWriterTest {
 
     @Test
     void writeXml_ValidSchema(@TempDir Path tempDir) throws Exception {
-        List<Car> cars = List.of(
+        List<CarBrand> cars = List.of(
             new Car("SUV", "RAV4", PRICE, PRICE_LIST)
         );
         Path xmlFile = tempDir.resolve("cars.xml");
@@ -100,7 +101,7 @@ class OutputWriterTest {
 
         OutputWriter.writeXml(xmlFile, cars);
         String xmlContent = Files.readString(xmlFile);
-        System.out.println("Generated XML:\n" + xmlContent);
+    //    System.out.println("Generated XML:\n" + xmlContent);
 
         // Updated XPath assertions to match current XML structure
         assertThat(xmlContent)
