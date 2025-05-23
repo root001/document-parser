@@ -1,5 +1,5 @@
-inputCsv: input.csv
-inputXml: input.xml
+inputCsv: C:\Users\just4\Downloads\execfiles\CarsBrand.csv
+inputXml: C:\Users\just4\Downloads\execfiles\carsType.xml
 outputPath: output/
 logLevel: debug
 outputFormat: table  # json/xml/table
