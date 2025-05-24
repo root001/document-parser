@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 
 public class FilterFactory {
     private static final Logger logger = LoggerFactory.getLogger(FilterFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(FilterFactory.class);
 
     public static Predicate<CarBrand> createFilter(Map<String, Object> filterConfig) {
         if (filterConfig == null || filterConfig.isEmpty()) {
@@ -59,6 +60,7 @@ public class FilterFactory {
                        car.price().currency().equalsIgnoreCase(currency));
         }
 
+        logger.debug("Final combined filter to apply: {}", combinedFilter);
         return combinedFilter;
     }
 }
