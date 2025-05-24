@@ -66,25 +66,9 @@ public class DocParserApplication {
             }
 
             String configPath = nonOptionArgs.get(0);
-            Double minPrice = null;
-            Double maxPrice = null;
-
-            if (args.containsOption("min-price")) {
-                List<String> minPriceValues = args.getOptionValues("min-price");
-                if (!minPriceValues.isEmpty()) {
-                    minPrice = parseDouble(minPriceValues.get(0));
-                }
-            }
-
-            if (args.containsOption("max-price")) {
-                List<String> maxPriceValues = args.getOptionValues("max-price");
-                if (!maxPriceValues.isEmpty()) {
-                    maxPrice = parseDouble(maxPriceValues.get(0));
-                }
-            }
 
             try {
-                List<CarBrand> carBrands = orchestrator.process(configPath, minPrice, maxPrice);
+                List<CarBrand> carBrands = orchestrator.process(configPath);
                 Path outputPath = Paths.get(System.getProperty("user.dir"), "output"+
                         LocalTime.now() +".json");
                 OutputWriter.writeJson(outputPath, carBrands);
