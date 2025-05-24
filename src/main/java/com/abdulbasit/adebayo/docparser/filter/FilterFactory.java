@@ -60,7 +60,8 @@ public class FilterFactory {
                        car.price().currency().equalsIgnoreCase(currency));
         }
 
-        logger.debug("Final combined filter to apply: {}", combinedFilter);
+        String filterDescription = buildFilterDescription(filterConfig);
+        logger.debug("Final combined filter to apply: {}", filterDescription);
         return combinedFilter;
     }
 }

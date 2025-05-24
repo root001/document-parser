@@ -40,6 +40,31 @@ public class Sorter {
                 .toList();
     }
 
+    private static String buildFilterDescription(Map<String, Object> filterConfig) {
+        if (filterConfig == null || filterConfig.isEmpty()) {
+            return "No filters";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        if (filterConfig.containsKey("brand")) {
+            sb.append("Brand=").append(filterConfig.get("brand")).append(" ");
+        }
+        if (filterConfig.containsKey("minPrice") && filterConfig.containsKey("maxPrice")) {
+            sb.append(String.format("Price[%s-%s] ", 
+                filterConfig.get("minPrice"), 
+                filterConfig.get("maxPrice")));
+        }
+        if (filterConfig.containsKey("startDate") && filterConfig.containsKey("endDate")) {
+            sb.append(String.format("Date[%s-%s] ", 
+                filterConfig.get("startDate"), 
+                filterConfig.get("endDate")));
+        }
+        if (filterConfig.containsKey("currency")) {
+            sb.append("Currency=").append(filterConfig.get("currency")).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
     private static Comparator<CarBrand> getComparator(String sortBy) {
         switch (sortBy.toLowerCase()) {
             case Constants.SORT_BY_DATE:
