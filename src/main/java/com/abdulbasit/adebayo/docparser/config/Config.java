@@ -17,7 +17,11 @@ public class Config {
     private String outputFormat = "json"; // json/xml/table
     @JsonProperty("filters")
     private Map<String, Object> filters;
+ //   private Map<String, String> sort;
+ //   private Map<String, String> currencyMapping;
+    @JsonProperty("sort")
     private Map<String, String> sort;
+    @JsonProperty("currencyMapping")
     private Map<String, String> currencyMapping;
 
     // Getters and Setters
@@ -69,8 +73,4 @@ public class Config {
         this.filters = filters;
     }
 
-    @JsonProperty("sort")
-    private Map<String, String> sort;
-    @JsonProperty("currencyMapping")
-    private Map<String, String> currencyMapping;
 }
