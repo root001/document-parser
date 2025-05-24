@@ -62,8 +62,8 @@ public class Orchestrator {
 
     private List<CarBrand> processData(Config config, Predicate<CarBrand> filter) {
         try {
-            Path csvPath = Paths.get(config.getInput_csv());
-            Path xmlPath = Paths.get(config.getInput_xml());
+            Path csvPath = Paths.get(config.getInputCsv());
+            Path xmlPath = Paths.get(config.getInputXml());
 
             logger.info("Parsing CSV data from: {}", csvPath);
             List<Brand> csvData = csvParser.parse(csvPath);

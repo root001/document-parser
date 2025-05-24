@@ -5,56 +5,54 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 public class Config {
-    private String input_csv;
-    private String input_xml;
-    private String output_path;
-    private String log_level = "info";
-    private String output_format = "json"; // json/xml/table
+    private String inputCsv;
+    private String inputXml;
+    private String outputPath;
+    private String logLevel = "info";
+    private String outputFormat = "json"; // json/xml/table
     private Map<String, Object> filters;
- //   private Map<String, String> sort;
- //   private Map<String, String> currencyMapping;
     private Map<String, String> sort;
     private Map<String, String> currencyMapping;
 
     // Getters and Setters
-    public String getInput_csv() {
-        return input_csv;
+    public String getInputCsv() {
+        return inputCsv;
     }
 
-    public void setInput_csv(String input_csv) {
-        this.input_csv = input_csv;
+    public void setInputCsv(String inputCsv) {
+        this.inputCsv = inputCsv;
     }
 
-    public String getInput_xml() {
-        return input_xml;
+    public String getInputXml() {
+        return inputXml;
     }
 
-    public void setInput_xml(String input_xml) {
-        this.input_xml = input_xml;
+    public void setInputXml(String inputXml) {
+        this.inputXml = inputXml;
     }
 
-    public String getOutput_path() {
-        return output_path;
+    public String getOutputPath() {
+        return outputPath;
     }
 
-    public void setOutput_path(String output_path) {
-        this.output_path = output_path;
+    public void setOutputPath(String outputPath) {
+        this.outputPath = outputPath;
     }
 
-    public String getLog_level() {
-        return log_level;
+    public String getLogLevel() {
+        return logLevel;
     }
 
-    public void setLog_level(String log_level) {
-        this.log_level = log_level;
+    public void setLogLevel(String logLevel) {
+        this.logLevel = logLevel;
     }
 
-    public String getOutput_format() {
-        return output_format;
+    public String getOutputFormat() {
+        return outputFormat;
     }
 
-    public void setOutput_format(String output_format) {
-        this.output_format = output_format;
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
     }
 
     public Map<String, Object> getFilters() {
@@ -65,4 +63,19 @@ public class Config {
         this.filters = filters;
     }
 
+    public Map<String, String> getSort() {
+        return sort;
+    }
+
+    public void setSort(Map<String, String> sort) {
+        this.sort = sort;
+    }
+
+    public Map<String, String> getCurrencyMapping() {
+        return currencyMapping;
+    }
+
+    public void setCurrencyMapping(Map<String, String> currencyMapping) {
+        this.currencyMapping = currencyMapping;
+    }
 }

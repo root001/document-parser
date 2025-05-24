@@ -2,6 +2,7 @@ package com.abdulbasit.adebayo.docparser.writer;
 
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
+import com.abdulbasit.adebayo.docparser.util.Constants;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

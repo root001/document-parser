@@ -7,6 +7,7 @@ import com.abdulbasit.adebayo.docparser.model.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,9 +20,9 @@ public class DataMerger {
     private static final Logger logger = LoggerFactory.getLogger(DataMerger.class);
 
     @Value("${car.brand.mapping}")
-    private String carBrandMappingConfig2;
+    private String carBrandMappingConfig;
 
-    private String carBrandMappingConfig = "Toyota=RAV4,Honda=Civic,Ford=F-150,Tesla=Model X,BMW=330i,Audi=Q5,Chevrolet=Silverado,Mercedes-Benz=C-Class,Nissan=Rogue,Hyundai=Elantra";
+    //private String carBrandMappingConfig = "Toyota=RAV4,Honda=Civic,Ford=F-150,Tesla=Model X,BMW=330i,Audi=Q5,Chevrolet=Silverado,Mercedes-Benz=C-Class,Nissan=Rogue,Hyundai=Elantra";
 
     private Map<String, String> carBrandMap;
 
@@ -32,8 +33,8 @@ public class DataMerger {
 
     private void ensureBrandMappingInitialized() {
         if (carBrandMap == null) {
-            logger.info("--- Static hardcoded test : {}", carBrandMappingConfig);
-            logger.info("--- +++ Mapping from config file : {}", carBrandMappingConfig2);
+        //    logger.info("--- Static hardcoded test : {}", carBrandMappingConfig);
+            logger.info("--- +++ Mapping from config file : {}", carBrandMappingConfig);
             this.carBrandMap = parseCarBrandMapping(carBrandMappingConfig);
             logger.info("Initialized car brand mapping with {} entries", carBrandMap.size());
         }
@@ -115,7 +116,7 @@ public class DataMerger {
      */
     private CarBrand createCarBrand(Car xmlCar, Map<String, LocalDate> brandDateMap) {
         try {
-            logger.info("Initiating car brand for :{} and dateMap : {}", xmlCar.model(), brandDateMap);
+            //logger.info("Initiating car brand for :{} and dateMap : {}", xmlCar.model(), brandDateMap);
             String carModel = xmlCar.model(); // e.g., "RAV4"
 
             // Find the brand that corresponds to this car model using reverse lookup

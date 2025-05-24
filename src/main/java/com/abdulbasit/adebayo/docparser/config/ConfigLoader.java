@@ -20,28 +20,25 @@ public class ConfigLoader {
     public Config loadConfig(String filePath) throws ConfigException {
         try (InputStream inputStream = Files.newInputStream(Paths.get(filePath))) {
             LoaderOptions loaderOptions = new LoaderOptions();
-            // You can configure loaderOptions here if needed, e.g.:
-            // loaderOptions.setAllowDuplicateKeys(false); // Default is true in 2.x, was false in 1.x
-            // loaderOptions.setProcessComments(true); // If you need to process comments
             Yaml yaml = new Yaml(new Constructor(Config.class, loaderOptions));
 
             Config config = yaml.load(inputStream);
 
-            if (config.getInput_csv() == null) {
+            if (config.getInputCsv() == null) {
                 throw new ConfigException("Missing required field: inputCsv");
             }
-            if (config.getInput_xml() == null) {
+            if (config.getInputXml() == null) {
                 throw new ConfigException("Missing required field: inputXml");
             }
-            if (config.getOutput_path() == null) {
+            if (config.getOutputPath() == null) {
                 throw new ConfigException("Missing required field: outputPath");
             }
 
             logger.info("Loaded configuration: {}", config);
 
-            // Update log level if specified in config (using SLF4J approach)
-            if (config.getLog_level() != null) {
-                setLogLevel(config.getLog_level());
+            // Update log level if specified in config
+            if (config.getLogLevel() != null) {
+                setLogLevel(config.getLogLevel());
             }
 
             return config;
@@ -51,32 +48,26 @@ public class ConfigLoader {
     }
 
     /**
-     * Sets log level using SLF4J/Logback approach instead of Log4j
+     * Sets log level using SLF4J/Logback approach
      */
     private void setLogLevel(String logLevel) {
         try {
-            // For Logback (most common with Spring Boot)
             ch.qos.logback.classic.Logger rootLogger =
                     (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             rootLogger.setLevel(ch.qos.logback.classic.Level.valueOf(logLevel.toUpperCase()));
             logger.info("Set log level to: {}", logLevel);
         } catch (Exception e) {
             logger.warn("Could not set log level to {}: {}", logLevel, e.getMessage());
-            return config;
-        } catch (Exception e) {
-            throw new ConfigException("Failed to load config: " + e.getMessage());
         }
     }
 
     @Bean
-    public Config config(ConfigLoader configLoader) {
+    public Config config() {
         try {
-            // Assuming the config path is hardcoded or passed as a system property/env variable
-            // Replace "config.yaml" with the actual path if it's different
-            return configLoader.loadConfig("config.yaml");
+            return loadConfig("config.yaml");
         } catch (ConfigException e) {
             logger.error("Failed to load configuration: {}", e.getMessage());
-            throw new RuntimeException("Failed to load configuration", e); // Or handle it differently
+            throw new RuntimeException("Failed to load configuration", e);
         }
     }
 }

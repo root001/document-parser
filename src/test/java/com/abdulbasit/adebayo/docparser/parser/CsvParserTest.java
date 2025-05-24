@@ -18,8 +18,9 @@ class CsvParserTest {
     @Test
     void parse_ValidCsv_ReturnsBrandReleases(@TempDir Path tempDir) throws Exception {
         String csvContent = """
-            Brand1,Product1,01/15/2023,v1.0
-            Brand2,Product2,02/20/2023,v2.0
+            Brand,ReleaseDate
+            Toyota,01/15/2023
+            Honda,02/20/2023
             """;
         Path csvFile = tempDir.resolve("test.csv");
         Files.writeString(csvFile, csvContent);
@@ -27,7 +28,7 @@ class CsvParserTest {
         List<Brand> result = parser.parse(csvFile);
         
         assertEquals(2, result.size());
-        assertEquals("Brand1", result.get(0).productName());
+        assertEquals("Toyota", result.get(0).productName());
         assertEquals(LocalDate.of(2023, 1, 15), result.get(0).releaseDate());
     }
 

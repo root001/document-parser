@@ -32,13 +32,15 @@ public class XmlParser {
     private final boolean caseSensitiveLookup;
 
     @Autowired
-    public XmlParser(Config config, ModelLookup modelLookup) throws IOException {
-        this(config, modelLookup, false);
+    public XmlParser(Config config) throws IOException {
+        this(config, false);
     }
 
-    public XmlParser(Config config, ModelLookup modelLookup, boolean caseSensitiveLookup) {
-        this.modelLookup = modelLookup;
+    public XmlParser(Config config, boolean caseSensitiveLookup) throws IOException {
         this.caseSensitiveLookup = caseSensitiveLookup;
+        // Create ModelLookup instance using config
+        this.modelLookup = new ModelLookup(Paths.get(config.getInputCsv()), caseSensitiveLookup);
+        logger.info("XmlParser initialized with CSV lookup file: {}", config.getInputCsv());
     }
 
     public List<Car> parse(Path xmlPath) throws ParseException {
@@ -50,19 +52,27 @@ public class XmlParser {
                 logger.error("XML file not found at path: {}", xmlPath);
                 throw new ParseException("XML file not found: " + xmlPath);
             }
-            
+
             logger.debug("Attempting to parse XML document (size: {} bytes)", Files.size(xmlPath));
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlPath.toFile());
-            
+
             NodeList carNodes = document.getElementsByTagName("car");
             logger.debug("Found {} car elements in XML", carNodes.getLength());
-            
+
             for (int i = 0; i < carNodes.getLength(); i++) {
                 Element car = (Element) carNodes.item(i);
                 logger.trace("Processing car element #{}", i+1);
-                
+
+                Node typeNode = car.getElementsByTagName("type").item(0);
+                if (typeNode == null) {
+                    logger.warn("Missing type in car element #{}", i+1);
+                    continue;
+                }
+                String type = typeNode.getTextContent();
+                logger.debug("Processing type: {}", type);
+
                 Node modelNode = car.getElementsByTagName("model").item(0);
                 if (modelNode == null) {
                     logger.warn("Missing model in car element #{}", i+1);
@@ -70,16 +80,16 @@ public class XmlParser {
                 }
                 String model = modelNode.getTextContent();
                 logger.debug("Processing model: {}", model);
-                
+
                 String brand = modelLookup.getBrandForModel(model);
                 if (brand == null) {
                     logger.warn("No brand mapping found for model: {}", model);
                 }
-                
+
                 // Handle optional price elements
                 Price price = null;
                 List<Price> priceList = new ArrayList<>();
-                
+
                 // Parse main price
                 NodeList priceNodes = car.getElementsByTagName("price");
                 if (priceNodes.getLength() > 0) {
@@ -100,7 +110,7 @@ public class XmlParser {
                 if (pricesNodes.getLength() > 0) {
                     NodeList priceListNodes = ((Element)pricesNodes.item(0)).getElementsByTagName("price");
                     logger.debug("Found {} prices in price list", priceListNodes.getLength());
-                    
+
                     for (int j = 0; j < priceListNodes.getLength(); j++) {
                         Element priceElem = (Element) priceListNodes.item(j);
                         String currency = priceElem.getAttribute("currency");
@@ -114,18 +124,18 @@ public class XmlParser {
                         }
                     }
                 }
-                
+
                 releases.add(new Car(
-                    brand,
-                    model,
-                    price,
-                    priceList
+                        type,
+                        model,
+                        price,
+                        priceList
                 ));
             }
         } catch (Exception e) {
             throw new ParseException("Failed to parse XML: " + e.getMessage(), e);
         }
-        
+
         if (releases.isEmpty()) {
             logger.warn("No valid car records found in XML file");
         } else {

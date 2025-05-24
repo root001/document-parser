@@ -1,6 +1,8 @@
 package com.abdulbasit.adebayo.docparser;
 
+import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.parser.Orchestrator;
+import com.abdulbasit.adebayo.docparser.util.Constants;
 import com.abdulbasit.adebayo.docparser.writer.OutputWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -11,8 +13,11 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
 @SpringBootApplication
 public class DocParserApplication {
@@ -46,7 +51,15 @@ public class DocParserApplication {
         public void run(ApplicationArguments args) throws Exception {
             List<String> nonOptionArgs = args.getNonOptionArgs();
 
-            if (args.containsOption("help") || args.containsOption("h") || nonOptionArgs.isEmpty()) {
+            // Check for help flags first
+            if (args.containsOption("help") || args.containsOption("h")) {
+                printHelp();
+                return;
+            }
+
+            // Check if no arguments provided
+            if (nonOptionArgs.isEmpty()) {
+                System.err.println("Error: Configuration path is required.");
                 printHelp();
                 return;
             }
@@ -56,16 +69,22 @@ public class DocParserApplication {
             Double maxPrice = null;
 
             if (args.containsOption("min-price")) {
-                minPrice = parseDouble(args.getOptionValues("min-price").get(0));
+                List<String> minPriceValues = args.getOptionValues("min-price");
+                if (!minPriceValues.isEmpty()) {
+                    minPrice = parseDouble(minPriceValues.get(0));
+                }
             }
 
             if (args.containsOption("max-price")) {
-                maxPrice = parseDouble(args.getOptionValues("max-price").get(0));
+                List<String> maxPriceValues = args.getOptionValues("max-price");
+                if (!maxPriceValues.isEmpty()) {
+                    maxPrice = parseDouble(maxPriceValues.get(0));
+                }
             }
 
             try {
                 List<CarBrand> carBrands = orchestrator.process(configPath, minPrice, maxPrice);
-                Path outputPath = Paths.get("output.json"); // You might want to configure this
+                Path outputPath = Paths.get(System.getProperty("user.dir"), "output.json");
                 OutputWriter.writeJson(outputPath, carBrands);
                 System.out.println("Data written to output.json");
 
