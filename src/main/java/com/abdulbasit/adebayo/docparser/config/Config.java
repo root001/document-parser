@@ -5,64 +5,56 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 public class Config {
-    @JsonProperty("inputCsv")
-    private String inputCsv;
-    @JsonProperty("inputXml")
-    private String inputXml;
-    @JsonProperty("outputPath")
-    private String outputPath;
-    @JsonProperty("logLevel")
-    private String logLevel = "info";
-    @JsonProperty("outputFormat")
-    private String outputFormat = "json"; // json/xml/table
-    @JsonProperty("filters")
+    private String input_csv;
+    private String input_xml;
+    private String output_path;
+    private String log_level = "info";
+    private String output_format = "json"; // json/xml/table
     private Map<String, Object> filters;
  //   private Map<String, String> sort;
  //   private Map<String, String> currencyMapping;
-    @JsonProperty("sort")
     private Map<String, String> sort;
-    @JsonProperty("currencyMapping")
     private Map<String, String> currencyMapping;
 
     // Getters and Setters
     public String getInput_csv() {
-        return inputCsv;
+        return input_csv;
     }
 
-    public void setInput_csv(String inputCsv) {
-        this.inputCsv = inputCsv;
+    public void setInput_csv(String input_csv) {
+        this.input_csv = input_csv;
     }
 
     public String getInput_xml() {
-        return inputXml;
+        return input_xml;
     }
 
-    public void setInput_xml(String inputXml) {
-        this.inputXml = inputXml;
+    public void setInput_xml(String input_xml) {
+        this.input_xml = input_xml;
     }
 
     public String getOutput_path() {
-        return outputPath;
+        return output_path;
     }
 
-    public void setOutput_path(String outputPath) {
-        this.outputPath = outputPath;
+    public void setOutput_path(String output_path) {
+        this.output_path = output_path;
     }
 
     public String getLog_level() {
-        return logLevel;
+        return log_level;
     }
 
-    public void setLog_level(String logLevel) {
-        this.logLevel = logLevel;
+    public void setLog_level(String log_level) {
+        this.log_level = log_level;
     }
 
     public String getOutput_format() {
-        return outputFormat;
+        return output_format;
     }
 
-    public void setOutput_format(String outputFormat) {
-        this.outputFormat = outputFormat;
+    public void setOutput_format(String output_format) {
+        this.output_format = output_format;
     }
 
     public Map<String, Object> getFilters() {
