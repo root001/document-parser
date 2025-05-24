@@ -2,12 +2,16 @@ package com.abdulbasit.adebayo.docparser.filter;
 
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.util.DateFormatter;
+import com.abdulbasit.adebayo.docparser.util.Sorter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class FilterFactory {
+    private static final Logger logger = LoggerFactory.getLogger(FilterFactory.class);
 
     public static Predicate<CarBrand> createFilter(Map<String, Object> filterConfig) {
         if (filterConfig == null || filterConfig.isEmpty()) {
@@ -20,7 +24,7 @@ public class FilterFactory {
         if (filterConfig.containsKey("brand")) {
             String brand = (String) filterConfig.get("brand");
             combinedFilter = combinedFilter.and(
-                car -> car.brandType().equalsIgnoreCase(brand));
+                car -> car.productName().equalsIgnoreCase(brand));
         }
 
         // Price range filter
