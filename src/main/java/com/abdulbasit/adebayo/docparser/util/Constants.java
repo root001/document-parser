@@ -12,4 +12,10 @@ public class Constants {
     
     // Logging
     public static final String LOGGER_NAME = "doc-parser";
+    
+    // Sorting
+    public static final String SORT_BY_DATE = "date";
+    public static final String SORT_BY_PRICE = "price";
+    public static final String SORT_ASC = "asc";
+    public static final String SORT_DESC = "desc";
 }

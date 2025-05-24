@@ -73,7 +73,8 @@ public class Orchestrator {
             logger.info("Merging data...");
             List<CarBrand> mergedData = dataMerger.mergeData(csvData, xmlData, filter);
 
-            return mergedData;
+            logger.info("Applying sorting...");
+            return Sorter.sort(mergedData, config.getSort());
 
         } catch (Exception e) {
             logger.error("Error processing data: {}", e.getMessage());
