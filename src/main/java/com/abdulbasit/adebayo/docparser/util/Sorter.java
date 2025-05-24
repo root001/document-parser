@@ -1,6 +1,9 @@
 package com.abdulbasit.adebayo.docparser.util;
 
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
+import com.abdulbasit.adebayo.docparser.parser.Orchestrator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -8,10 +11,13 @@ import java.util.Map;
 
 public class Sorter {
 
+    private static final Logger logger = LoggerFactory.getLogger(Sorter.class);
+
     public static List<CarBrand> sort(List<CarBrand> cars, Map<String, String> sortConfig) {
         if (sortConfig == null || sortConfig.isEmpty()) {
             return cars;
         }
+        logger.debug("Sorting config to apply : {}", sortConfig);
 
         String sortBy = sortConfig.get("by");
         String sortOrder = sortConfig.get("order");
