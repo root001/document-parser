@@ -33,9 +33,9 @@ public class Orchestrator {
         this.dataMerger = dataMerger;
     }
 
-    public List<CarBrand> process(String configPath, Double minPrice, Double maxPrice) {
+    public List<CarBrand> process(String configPath) {
         Config config = loadConfig(configPath);
-        Predicate<CarBrand> filter = createFilter(config, minPrice, maxPrice);
+        Predicate<CarBrand> filter = createFilter(config);
         return processData(config, filter);
     }
 
@@ -49,15 +49,14 @@ public class Orchestrator {
         }
     }
 
-    private Predicate<CarBrand> createFilter(Config config, Double minPrice, Double maxPrice) {
-        String brand = (String) config.getFilters().get("brand");
-        if (brand != null && minPrice != null && maxPrice != null) {
-            logger.info("Creating BrandPriceFilter with brand: {}, minPrice: {}, maxPrice: {}", brand, minPrice, maxPrice);
-            return new BrandPriceFilter(brand, minPrice, maxPrice);
-        } else {
-            logger.info("No BrandPriceFilter will be applied.");
-            return null;
+    private Predicate<CarBrand> createFilter(Config config) {
+        if (config.getFilters() == null || config.getFilters().isEmpty()) {
+            logger.info("No filters configured");
+            return car -> true;
         }
+        
+        logger.info("Creating filter from config: {}", config.getFilters());
+        return FilterFactory.createFilter(config.getFilters());
     }
 
     private List<CarBrand> processData(Config config, Predicate<CarBrand> filter) {
