@@ -42,10 +42,19 @@ public class OutputWriter {
         // xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
+    public static void writeJson(List<CarBrand> cars) throws IOException {
+        Path outputPath = Path.of(Constants.DEFAULT_OUTPUT_DIR, Constants.DEFAULT_JSON_FILENAME);
+        writeJson(outputPath, cars);
+    }
+
     public static void writeJson(Path outputPath, List<CarBrand> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
-
         jsonMapper.writeValue(outputPath.toFile(), cars);
+    }
+
+    public static void writeXml(List<CarBrand> cars) throws IOException {
+        Path outputPath = Path.of(Constants.DEFAULT_OUTPUT_DIR, Constants.DEFAULT_XML_FILENAME);
+        writeXml(outputPath, cars);
     }
 
     public static void writeXml(Path outputPath, List<CarBrand> cars) throws IOException {
@@ -56,7 +65,6 @@ public class OutputWriter {
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        // Create root wrapper element
         mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
     }
 

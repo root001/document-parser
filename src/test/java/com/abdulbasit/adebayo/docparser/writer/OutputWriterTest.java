@@ -28,7 +28,7 @@ class OutputWriterTest {
             new CarBrand("SUV", "Toyota", "RAV4", 
                 LocalDate.of(2023, 1, 15), PRICE, PRICE_LIST)
         );
-        Path jsonFile = tempDir.resolve("cars.json");
+        Path jsonFile = tempDir.resolve(Constants.DEFAULT_JSON_FILENAME);
         
         OutputWriter.writeJson(jsonFile, carBrands);
         List<CarBrand> readCarBrands = OutputWriter.getJsonMapperForTesting().readValue(
@@ -44,7 +44,7 @@ class OutputWriterTest {
             new CarBrand("SUV", "Toyota", "RAV4",
                 LocalDate.of(2023, 1, 15), PRICE, PRICE_LIST)
         );
-        Path xmlFile = tempDir.resolve("cars.xml");
+        Path xmlFile = tempDir.resolve(Constants.DEFAULT_XML_FILENAME);
         
         OutputWriter.writeXml(xmlFile, carBrands);
         List<CarBrand> readCarBrands = OutputWriter.getXmlMapperForTesting().readValue(
@@ -60,7 +60,7 @@ class OutputWriterTest {
             new CarBrand("SUV", "Toyota", "RAV4",
                 LocalDate.of(2023, 1, 15), PRICE, PRICE_LIST)
         );
-        Path xmlFile = tempDir.resolve("cars.xml");
+        Path xmlFile = tempDir.resolve(Constants.DEFAULT_XML_FILENAME);
         OutputWriter.writeXml(xmlFile, carBrands);
         
         String xmlContent = Files.readString(xmlFile);
@@ -77,7 +77,7 @@ class OutputWriterTest {
             new CarBrand("SUV", "Toyota", "RAV4",
                 LocalDate.of(2023, 1, 15), null, PRICE_LIST)
         );
-        Path jsonFile = tempDir.resolve("cars.json");
+        Path jsonFile = tempDir.resolve(Constants.DEFAULT_JSON_FILENAME);
         
         OutputWriter.writeJson(jsonFile, carBrands);
         String jsonContent = Files.readString(jsonFile);
@@ -100,7 +100,7 @@ class OutputWriterTest {
             new CarBrand("SUV", "Toyota", "RAV4",
                 LocalDate.of(2023, 1, 15), null, multiplePrices)
         );
-        Path xmlFile = tempDir.resolve("cars.xml");
+        Path xmlFile = tempDir.resolve(Constants.DEFAULT_XML_FILENAME);
 
         OutputWriter.writeXml(xmlFile, carBrands);
         String xmlContent = Files.readString(xmlFile);
