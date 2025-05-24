@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -84,7 +85,8 @@ public class DocParserApplication {
 
             try {
                 List<CarBrand> carBrands = orchestrator.process(configPath, minPrice, maxPrice);
-                Path outputPath = Paths.get(System.getProperty("user.dir"), "output.json");
+                Path outputPath = Paths.get(System.getProperty("user.dir"), "output"+
+                        LocalTime.now() +".json");
                 OutputWriter.writeJson(outputPath, carBrands);
                 System.out.println("Data written to output.json");
 
