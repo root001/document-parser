@@ -69,6 +69,13 @@ public class OutputWriter {
         mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
     }
 
+    public static void writeTable(Path outputPath, List<CarBrand> cars) throws IOException {
+        Files.createDirectories(outputPath.getParent());
+        TableFormatter formatter = new TableFormatter();
+        String table = formatter.format(cars);
+        Files.writeString(outputPath, table);
+    }
+
     // For testing purposes only
     static ObjectMapper getJsonMapperForTesting() {
         return jsonMapper;

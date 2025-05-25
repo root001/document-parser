@@ -95,9 +95,8 @@ public class Orchestrator {
                 OutputWriter.writeXml(outputPath, results);
                 break;
             case "table":
-                // For table format, we'll need to implement a TableWriter
-                // or modify OutputWriter to handle table format
-                throw new UnsupportedOperationException("Table format not yet implemented");
+                OutputWriter.writeTable(outputPath, results);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported output format: " + outputFormat);
         }

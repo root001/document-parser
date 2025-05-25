@@ -92,6 +92,24 @@ class OutputWriterTest {
     }
 
     @Test
+    void writeTable_ValidData_ProducesTable(@TempDir Path tempDir) throws Exception {
+        List<CarBrand> carBrands = List.of(
+            new CarBrand("SUV", "Toyota", "RAV4",
+                LocalDate.of(2023, 1, 15), new Price("USD", 25000), List.of())
+        );
+        Path tableFile = tempDir.resolve(Constants.DEFAULT_TABLE_FILENAME);
+        
+        OutputWriter.writeTable(tableFile, carBrands);
+        String tableContent = Files.readString(tableFile);
+        
+        assertTrue(tableContent.contains("Toyota"));
+        assertTrue(tableContent.contains("RAV4"));
+        assertTrue(tableContent.contains("2023,15,01"));
+        assertTrue(tableContent.contains("USD"));
+        assertTrue(tableContent.contains("25000.00"));
+    }
+
+    @Test
     void writeXml_MultiplePrices_IncludesAll(@TempDir Path tempDir) throws Exception {
         List<Price> multiplePrices = List.of(
             new Price("USD", 25000.0),
