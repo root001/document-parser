@@ -4,17 +4,21 @@ import com.abdulbasit.adebayo.docparser.config.Config;
 import com.abdulbasit.adebayo.docparser.config.ConfigLoader;
 import com.abdulbasit.adebayo.docparser.exception.ConfigException;
 import com.abdulbasit.adebayo.docparser.filter.BrandPriceFilter;
+import com.abdulbasit.adebayo.docparser.filter.FilterFactory;
 import com.abdulbasit.adebayo.docparser.model.Brand;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.config.Config;
+import com.abdulbasit.adebayo.docparser.util.Sorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @Component
@@ -54,9 +58,25 @@ public class Orchestrator {
             logger.info("No filters configured");
             return car -> true;
         }
-        
+
         logger.info("Creating filter from config: {}", config.getFilters());
-        return FilterFactory.createFilter(config.getFilters());
+
+        // Flatten nested filter configurations
+        Map<String, Object> flattenedFilters = new HashMap<>();
+        for (Map.Entry<String, Object> entry : config.getFilters().entrySet()) {
+            Object value = entry.getValue();
+            if (value instanceof Map) {
+                // If the value is a nested map, add its contents to the flattened map
+                Map<String, Object> nestedMap = (Map<String, Object>) value;
+                flattenedFilters.putAll(nestedMap);
+            } else {
+                // If it's a direct value, add it as is
+                flattenedFilters.put(entry.getKey(), value);
+            }
+        }
+
+        logger.debug("Flattened filter config: {}", flattenedFilters);
+        return FilterFactory.createFilter(flattenedFilters);
     }
 
     private List<CarBrand> processData(Config config, Predicate<CarBrand> filter) {

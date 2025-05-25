@@ -69,8 +69,8 @@ public class DocParserApplication {
 
             try {
                 List<CarBrand> carBrands = orchestrator.process(configPath);
-                Path outputPath = Paths.get(System.getProperty("user.dir"), "output"+
-                        LocalTime.now() +".json");
+                Path outputPath = Paths.get(System.getProperty("user.dir"), "output-"+
+                        LocalTime.now().getNano() +".json");
                 OutputWriter.writeJson(outputPath, carBrands);
                 System.out.println("Data written to output.json");
 
