@@ -6,6 +6,11 @@ public class Constants {
     public static final String DEFAULT_XML_FILENAME = "output.xml";
     public static final String DEFAULT_TABLE_FILENAME = "output.txt";
     
+    // Output formats
+    public static final String OUTPUT_FORMAT_JSON = "json";
+    public static final String OUTPUT_FORMAT_XML = "xml";
+    public static final String OUTPUT_FORMAT_TABLE = "table";
+    
     // Date formats
     public static final String DATE_INPUT_FORMAT = "MM/dd/yyyy";
     public static final String DATE_OUTPUT_FORMAT = "yyyy,dd,MM";

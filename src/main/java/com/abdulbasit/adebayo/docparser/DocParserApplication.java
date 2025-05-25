@@ -68,11 +68,8 @@ public class DocParserApplication {
             String configPath = nonOptionArgs.get(0);
 
             try {
-                List<CarBrand> carBrands = orchestrator.process(configPath);
-                Path outputPath = Paths.get(System.getProperty("user.dir"), "output-"+
-                        LocalTime.now().getNano() +".json");
-                OutputWriter.writeJson(outputPath, carBrands);
-                System.out.println("Data written to output.json");
+                orchestrator.process(configPath);
+                System.out.println("Data processing completed successfully");
 
             } catch (Exception e) {
                 System.err.println("An error occurred: " + e.getMessage());

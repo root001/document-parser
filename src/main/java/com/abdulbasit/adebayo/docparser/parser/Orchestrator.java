@@ -37,10 +37,11 @@ public class Orchestrator {
         this.dataMerger = dataMerger;
     }
 
-    public List<CarBrand> process(String configPath) {
+    public void process(String configPath) throws IOException {
         Config config = loadConfig(configPath);
         Predicate<CarBrand> filter = createFilter(config);
-        return processData(config, filter);
+        List<CarBrand> results = processData(config, filter);
+        writeOutput(config, results);
     }
 
     private Config loadConfig(String configPath) {
@@ -77,6 +78,29 @@ public class Orchestrator {
 
         logger.debug("Flattened filter config: {}", flattenedFilters);
         return FilterFactory.createFilter(flattenedFilters);
+    }
+
+    private void writeOutput(Config config, List<CarBrand> results) throws IOException {
+        String outputFormat = config.getOutputFormat() != null ? 
+                            config.getOutputFormat().toLowerCase() : "json";
+        Path outputPath = Paths.get(config.getOutputPath());
+        
+        switch (outputFormat) {
+            case "json":
+                OutputWriter.writeJson(outputPath, results);
+                break;
+            case "xml":
+                OutputWriter.writeXml(outputPath, results);
+                break;
+            case "table":
+                // For table format, we'll need to implement a TableWriter
+                // or modify OutputWriter to handle table format
+                throw new UnsupportedOperationException("Table format not yet implemented");
+            default:
+                throw new IllegalArgumentException("Unsupported output format: " + outputFormat);
+        }
+        
+        logger.info("Output written to {} in {} format", outputPath, outputFormat);
     }
 
     private List<CarBrand> processData(Config config, Predicate<CarBrand> filter) {
