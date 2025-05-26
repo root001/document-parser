@@ -1,17 +1,17 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
+import com.abdulbasit.adebayo.docparser.formatter.TableFormatter;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
+import com.abdulbasit.adebayo.docparser.util.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.dataformat.xml.XmlAnnotationIntrospector;
-import com.fasterxml.jackson.dataformat.xml.jaxb.XmlJaxbAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class OutputWriter {
     private static final ObjectMapper jsonMapper;
     private static final XmlMapper xmlMapper; // Line 26 in your error likely refers to the initialization below
@@ -43,10 +44,19 @@ public class OutputWriter {
         // xmlMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
+    public static void writeJson(List<CarBrand> cars) throws IOException {
+        Path outputPath = Path.of(Constants.DEFAULT_OUTPUT_DIR, Constants.DEFAULT_JSON_FILENAME);
+        writeJson(outputPath, cars);
+    }
+
     public static void writeJson(Path outputPath, List<CarBrand> cars) throws IOException {
         Files.createDirectories(outputPath.getParent());
-
         jsonMapper.writeValue(outputPath.toFile(), cars);
+    }
+
+    public static void writeXml(List<CarBrand> cars) throws IOException {
+        Path outputPath = Path.of(Constants.DEFAULT_OUTPUT_DIR, Constants.DEFAULT_XML_FILENAME);
+        writeXml(outputPath, cars);
     }
 
     public static void writeXml(Path outputPath, List<CarBrand> cars) throws IOException {
@@ -57,8 +67,14 @@ public class OutputWriter {
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        // Create root wrapper element
         mapper.writeValue(outputPath.toFile(), new XmlCarList(cars));
+    }
+
+    public static void writeTable(Path outputPath, List<CarBrand> cars) throws IOException {
+        Files.createDirectories(outputPath.getParent());
+        TableFormatter formatter = new TableFormatter();
+        String table = formatter.format(cars);
+        Files.writeString(outputPath, table);
     }
 
     // For testing purposes only

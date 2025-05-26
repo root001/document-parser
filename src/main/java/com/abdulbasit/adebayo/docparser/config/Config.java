@@ -1,5 +1,7 @@
 package com.abdulbasit.adebayo.docparser.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 public class Config {
@@ -13,43 +15,43 @@ public class Config {
     private Map<String, String> currencyMapping;
 
     // Getters and Setters
-    public String getInput_csv() {
+    public String getInputCsv() {
         return inputCsv;
     }
 
-    public void setInput_csv(String inputCsv) {
+    public void setInputCsv(String inputCsv) {
         this.inputCsv = inputCsv;
     }
 
-    public String getInput_xml() {
+    public String getInputXml() {
         return inputXml;
     }
 
-    public void setInput_xml(String inputXml) {
+    public void setInputXml(String inputXml) {
         this.inputXml = inputXml;
     }
 
-    public String getOutput_path() {
+    public String getOutputPath() {
         return outputPath;
     }
 
-    public void setOutput_path(String outputPath) {
+    public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
 
-    public String getLog_level() {
+    public String getLogLevel() {
         return logLevel;
     }
 
-    public void setLog_level(String logLevel) {
+    public void setLogLevel(String logLevel) {
         this.logLevel = logLevel;
     }
 
-    public String getOutput_format() {
+    public String getOutputFormat() {
         return outputFormat;
     }
 
-    public void setOutput_format(String outputFormat) {
+    public void setOutputFormat(String outputFormat) {
         this.outputFormat = outputFormat;
     }
 

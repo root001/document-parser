@@ -3,6 +3,7 @@ package com.abdulbasit.adebayo.docparser.filter;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Predicate;
 
