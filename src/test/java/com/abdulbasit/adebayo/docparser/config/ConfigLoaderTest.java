@@ -20,14 +20,13 @@ class ConfigLoaderTest {
     }
 
     @Test
-    @Disabled
     void loadConfig_ValidConfig_ReturnsConfig(@TempDir Path tempDir) throws Exception {
         // Create a test YAML file
         String yamlContent = """
-                input_csv: test.csv
-                input_xml: test.xml
-                output_path: output/
-                log_level: debug
+                inputCsv: test.csv
+                inputXml: test.xml
+                outputPath: output/
+                logLevel: debug
                 """;
         Path configFile = tempDir.resolve("config.yaml");
         Files.writeString(configFile, yamlContent);
@@ -42,12 +41,11 @@ class ConfigLoaderTest {
     }
 
     @Test
-    @Disabled
     void loadConfig_MissingRequiredField_ThrowsConfigException(@TempDir Path tempDir) throws Exception {
         // Missing output_path
         String yamlContent = """
-                input_csv: test.csv
-                input_xml: test.xml
+                inputCsv: test.csv
+                inputXml: test.xml
                 """;
         Path configFile = tempDir.resolve("config.yaml");
         Files.writeString(configFile, yamlContent);
@@ -77,12 +75,11 @@ class ConfigLoaderTest {
     }
 
     @Test
-    @Disabled
     void loadConfig_WithoutLogLevel_LoadsSuccessfully(@TempDir Path tempDir) throws Exception {
         String yamlContent = """
-                input_csv: test.csv
-                input_xml: test.xml
-                output_path: output/
+                inputCsv: test.csv
+                inputXml: test.xml
+                outputPath: output/
                 """;
         Path configFile = tempDir.resolve("config.yaml");
         Files.writeString(configFile, yamlContent);

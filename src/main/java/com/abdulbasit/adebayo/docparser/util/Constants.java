@@ -1,7 +1,7 @@
 package com.abdulbasit.adebayo.docparser.util;
 
 public class Constants {
-    public static final String DEFAULT_OUTPUT_DIR = "output";
+    public static final String DEFAULT_OUTPUT_DIR = "output/";
     public static final String DEFAULT_JSON_FILENAME = "output.json";
     public static final String DEFAULT_XML_FILENAME = "output.xml";
     public static final String DEFAULT_TABLE_FILENAME = "output.txt";

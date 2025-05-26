@@ -36,7 +36,7 @@ public class CsvParser {
             
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
-                logger.info("Data read for line {} is : {}", lineNumber, line);
+                logger.debug("Data read for line {} is : {}", lineNumber, line);
                 if (line.trim().isEmpty()) continue;
                 
                 try {
@@ -45,9 +45,9 @@ public class CsvParser {
                             .map(part -> part == null ? null : part.replace("\"", ""))
                             .toArray(String[]::new);
 
-                    logger.info("line parts length : {}", cleanParts[0].trim());
+                    logger.debug("line parts length : {}", cleanParts[0].trim());
                     if(!cleanParts[1].trim().equalsIgnoreCase("ReleaseDate")){
-                        logger.info("Transforming {} to date", cleanParts[1]);
+                        logger.debug("Transforming {} to date", cleanParts[1]);
                         LocalDate releaseDate = DateFormatter.parseFromInput(cleanParts[1].trim());
                         Brand release = new Brand(
                                 cleanParts[0].trim(),

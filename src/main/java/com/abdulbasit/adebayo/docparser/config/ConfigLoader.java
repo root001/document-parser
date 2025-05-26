@@ -34,8 +34,6 @@ public class ConfigLoader {
                 throw new ConfigException("Missing required field: outputPath");
             }
 
-            logger.info("Loaded configuration: {}", config);
-
             // Update log level if specified in config
             if (config.getLogLevel() != null) {
                 setLogLevel(config.getLogLevel());

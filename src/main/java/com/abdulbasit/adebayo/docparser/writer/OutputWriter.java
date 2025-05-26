@@ -1,5 +1,6 @@
 package com.abdulbasit.adebayo.docparser.writer;
 
+import com.abdulbasit.adebayo.docparser.formatter.TableFormatter;
 import com.abdulbasit.adebayo.docparser.model.Car;
 import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.model.Price;

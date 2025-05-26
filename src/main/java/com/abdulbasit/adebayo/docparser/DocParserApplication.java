@@ -1,9 +1,6 @@
 package com.abdulbasit.adebayo.docparser;
 
-import com.abdulbasit.adebayo.docparser.model.CarBrand;
 import com.abdulbasit.adebayo.docparser.parser.Orchestrator;
-import com.abdulbasit.adebayo.docparser.util.Constants;
-import com.abdulbasit.adebayo.docparser.writer.OutputWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,14 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
 
 @SpringBootApplication
 public class DocParserApplication {

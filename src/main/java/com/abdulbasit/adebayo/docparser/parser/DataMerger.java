@@ -34,7 +34,7 @@ public class DataMerger {
     private void ensureBrandMappingInitialized() {
         if (carBrandMap == null) {
         //    logger.info("--- Static hardcoded test : {}", carBrandMappingConfig);
-            logger.info("--- +++ Mapping from config file : {}", carBrandMappingConfig);
+            logger.debug("--- +++ Mapping from config file : {}", carBrandMappingConfig);
             this.carBrandMap = parseCarBrandMapping(carBrandMappingConfig);
             logger.info("Initialized car brand mapping with {} entries", carBrandMap.size());
         }
@@ -101,7 +101,7 @@ public class DataMerger {
      * For each Car from XML, finds matching Brand from CSV using the carBrandMap.
      */
     private List<CarBrand> mergeXmlWithCsvData(List<Car> xmlData, Map<String, LocalDate> brandDateMap) {
-        logger.info("-- xmlData to merge : {} and mergeXmlWithCsvData dateMap is : {}", xmlData, brandDateMap);
+        logger.debug("xmlData to merge : {} and mergeXmlWithCsvData dateMap is : {}", xmlData, brandDateMap);
         return xmlData.stream()
                 .filter(Objects::nonNull)
                 .filter(car -> car.type() != null && car.model() != null)

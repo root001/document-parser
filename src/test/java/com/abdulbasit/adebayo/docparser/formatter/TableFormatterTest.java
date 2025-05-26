@@ -22,7 +22,7 @@ class TableFormatterTest {
         TableFormatter formatter = new TableFormatter();
         String result = formatter.format(releases);
 
-        System.out.println("---------------- headers : "+ result);
+    //    System.out.println("---------------- headers : "+ result);
         assertTrue(result.contains("| Brand      | Model      | Release Date (yyyy,dd,MM) | Product    | Currency | Amount     |"));
         assertTrue(result.contains("| SUV        | RAV4       | 2023,15,01                | Toyota     | USD      | 25000.00   |"));
     }
